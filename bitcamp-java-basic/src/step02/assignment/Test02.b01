@@ -1,0 +1,34 @@
+
+package step02.assignment;
+
+
+// 1단계 : 한명의 정보 한번에 입력받아 출력하기
+public class Test02 {
+    public static void main(String[] args){
+        java.io.InputStream keyboard = System.in;
+        java.util.Scanner keyScan = new java.util.Scanner(keyboard);
+
+        int sum = 0;
+        double avg = 0;
+
+        
+        System.out.print("입력? ");
+        String name1 = keyScan.next();
+        int kor1 = keyScan.nextInt();
+        int eng1 = keyScan.nextInt();
+        int math1 = keyScan.nextInt();
+
+        sum = kor1+eng1+math1;
+        avg = sum/3;
+        System.out.println("==============");
+        System.out.printf("%s %d %d %d %d %.2f \n",name1, kor1, eng1, math1, sum, avg);
+
+        
+
+
+
+
+
+    }
+}
+

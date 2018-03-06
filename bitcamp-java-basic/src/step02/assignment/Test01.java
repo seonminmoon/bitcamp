@@ -13,7 +13,7 @@ public class Test01 {
         String name = sc.next();
         System.out.print("국어 : ");
         int kor = sc.nextInt();
-        System.out.print("영어 : ");
+        System.out.print("영어 : "); 
         int eng = sc.nextInt();
         System.out.print("수학 : ");
         int math = sc.nextInt();
@@ -28,3 +28,4 @@ public class Test01 {
 
     }
 }
+
