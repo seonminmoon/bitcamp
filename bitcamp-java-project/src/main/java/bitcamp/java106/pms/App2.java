@@ -49,11 +49,15 @@ public class App2 {
     }
 } 
 
+// 내가 놓친 것
+// 1. domain 폴더에 패키지 클래스 만들기
+// 2. teams 설정값 넘어가면 묻지도 따지지도 않고 출력하기, srt 명령어
 
-
-
-/*team.teamName = sc.nextLine();
-
- System.out.println("-----------------------------");
-System.out.printf("%s, %d명, %s ~ %s \n",
-    team.naver, team.num, team.startDay, team.endDay)*/
+/*          if(count == teams.length) break; 
+            if (i == teams.length-1) break;   --> i는 0부터시작, count는 1부터 시작이기 때문에
+            
+            if (str.toLowerCase().equals("n")) {              
+                //toLowerCase : 대소문자 모두 소문자로 바꿔줌
+                //equals      : 글자 비교하는 명령어
+                break;
+*/
