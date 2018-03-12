@@ -1,31 +1,24 @@
-// 논리 연산자 : &&, ||, !(not)
+// 비트 이동 연산자 : >>, >>>, <<
 
 package step04;
 
-public class Exam03_1 {
+public class Exam04_1 {
     public static void main(String[] args){
+        int i = 1;
+        System.out.println(i << 1);
+        System.out.println(i << 2);
+        System.out.println(i << 3);
+        System.out.println(i << 4);
+        // 왼쪽으로 이동 후,
+        // 오른쪽 빈자리 : 0으로 채운다.
+        // 왼쪽 경계를 넘어간 비트 : 짜른다.
 
-        // AND 연산자
-        // - 두 개의논리 값이 모두 True 일 때 결과가 true가 된다.
-
-        System.out.println(true && true);
-        System.out.println(true && false);
-        System.out.println(false&& true);
-        System.out.println(false&& false);
-
-        System.out.println("=====================");
-        // OR 연산자
-        // - 두 개의 논리 값 중 한 개라도 true 이면 결과는 true 가 된다.
-        System.out.println(true || true);
-        System.out.println(true || false);
-        System.out.println(false || true);
-        System.out.println(false || false);
-
-        System.out.println("=====================");
-
-        // NOT 연산자
-        // - true 는 false 로 false 는 true 로 바꾼다.
-        System.out.println(!true);
-        System.out.println(!false);
+        i = 0b0000_1011; // 11
+        System.out.println(i << 1); // 22 => 0001 0110
+        System.out.println(i << 2); // 44 => 0010 1100
+        System.out.println(i << 3); // 88 => 0101 1000
     }
 }
+
+// 왼쪽 이동
+// - 1비트 이동은 곱하기 2 한 것과 같은 효과를 준다.

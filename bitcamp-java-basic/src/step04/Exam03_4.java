@@ -15,4 +15,4 @@ public class Exam03_4 {
         System.out.printf("a=%b, b=%b, r=%b \n", a, b, r);
 
     }
-}
+}  
