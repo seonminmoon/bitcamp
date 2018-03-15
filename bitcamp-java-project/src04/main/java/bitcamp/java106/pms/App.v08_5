@@ -25,7 +25,6 @@ public class App {
 
         while(true) {
             System.out.print("명령> ");
-            // 처음: String input = keyScan.nextLine().toLowerCase(); 
             String[] arr = keyScan.nextLine().toLowerCase().split(" "); 
             String menu = arr[0]; 
             String option = null; // 주소 없음!

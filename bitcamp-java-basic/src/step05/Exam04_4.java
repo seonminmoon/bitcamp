@@ -16,14 +16,14 @@ public class Exam04_4 {
         list.add(true);
         list.add(365);
 
-        for (int i = 0; i < list.size(); i++) 
+        for (int i = 0; i < list.size(); i++)  // 특정 범위가 꺼내고 싶을 때, 인덱스 알고싶을때
             System.out.println(list.get(i));
 
         System.out.println("==================");
 
         // for 문에 컬렉션도 적용할 수 있다.
         // for (변수 선언 : 컬렉션객체) 문장;
-        for (Object value : list)
+        for (Object value : list)               // 직관적으로 전부 값만 나열하고싶을 때
             System.out.println(value);
-        }
     }
+}

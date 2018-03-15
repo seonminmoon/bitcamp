@@ -41,12 +41,17 @@ public class Exam02_4 {
         case ADMIN: // 관리자
             System.out.println("다른 회원의 글도 변경,삭제 할 수 있습니다.");
             break;
+        case 2100000000 * 7:    
         }
 
         // enum 으로 정의된 상수를 사용하려면
         // enum 타입의 변수를 선언해야 한다.
         // => final int 처럼 직접 값을 지정하지 않아도 된다.
         // => 값을 직접 지정할 수도 있다. (나중에 따로 enum 문법에서 설명)
+        //
+        // enum 사용하는 주된 이유는?
+        // => 100, 200, "admin" 과 같이 값을 직접 지정할 필요가 없다.
+        // => enum 변수에는 그 타입에 정의된 값만 저장할 수 있도록 제어할 수 있다.
         Level userLevel = Level.MEMBER2;
         switch (userLevel) {
         case GUEST2: // 손님
@@ -63,3 +68,9 @@ public class Exam02_4 {
         
     }
 }
+
+// if vs switch
+// => 복잡한 조건으로 프로그램 흐름을 제어해야하는 상황이라면
+//    if문을 사용하라!
+// => int나 문자열처럼 단순한 값으로 프로그램을 제어할 수 있다면,
+//    switch 문을 사용하는 게 낫다.

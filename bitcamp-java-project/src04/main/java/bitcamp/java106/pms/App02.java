@@ -5,12 +5,8 @@ import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.domain.Member;
 import java.util.Scanner;
 
-// ver 0.5 - member/add,list,view 명령어를 처리하는 코드를 메서드로 분리한다.
-// ver 0.4 - team/add,list,view 명령어를 처리하는 코드를 메서드로 분리한다.
-// ver 0.3 - help 명령어를 처리하는 코드를 메서드로 분리한다.
-// ver 0.2 - quit 명령어를 처리하는 코드를 메서드로 분리한다.
-// ver 0.1 - 명령어를 입력 받는 코드를 메서드로 분리한다.
-public class App {
+// ver 0.1 회원 정보 변경, 팀 정보 변경
+public class App02 {
     // 클래스 변수 = 스태틱 변수
     // => 클래스 안에서 어디에서나 사용할 수 있는 변수이다.
     static Scanner keyScan = new Scanner(System.in);
@@ -124,6 +120,37 @@ public class App {
             System.out.printf("암호: %s\n", member.password);
         }
     }
+    static void onMemberUpdate() {
+        System.out.println("[회원 정보 조회]");
+        if (option == null) {
+            System.out.println("아이디를 입력하시기 바랍니다.");
+            return;
+        }
+        
+        Member member = null;
+        int i;
+        for (i = 0; i < memberIndex; i++) {
+            if (option.equals(members[i].id.toLowerCase())) {
+                member = members[i];
+                break;
+            }
+        }
+
+        if (member == null) {
+            System.out.println("해당 아이디의 회원이 없습니다.");
+        } else {
+            Member updateMember = new Member();
+            System.out.printf("아이디(%s)\n", member.id);
+            updateMember.id = keyScan.nextLine();
+            System.out.printf("이메일(%s) \n", member.email);
+            updateMember.email = keyScan.nextLine();
+            System.out.printf("암호? \n", member.password);
+            updateMember.password = keyScan.nextLine();
+            members[i] = updateMember;
+            System.out.println("변경하였습니다.");
+        }
+
+    }
     static void onTeamUpdate() {
         System.out.println("[팀 정보 수정]");
         if (option == null) {
@@ -131,7 +158,8 @@ public class App {
             return;
         }
         Team team = null;
-        for (int i = 0; i < teamIndex; i++) {
+        int i; //int i 값을 밖으로 빼고
+        for (i = 0; i < teamIndex; i++) {
             if (option.equals(teams[i].name.toLowerCase())) {
                 team = teams[i];
                 break;
@@ -140,27 +168,23 @@ public class App {
         if (team == null) {
             System.out.println("해당 이름의 팀이 없습니다.");
         } else {
-            //Team updateTeam = new Team();
+            Team updateTeam = new Team();
             System.out.printf("팀명(%s)? ", team.name);
-            String nameUpdate = keyScan.nextLine();
-            team.name = nameUpdate;
+            updateTeam.name = keyScan.nextLine();
 
             System.out.printf("설명:(%s)? ", team.title);
-            String titleUpdate = keyScan.nextLine();
-            team.title = titleUpdate;
+            updateTeam.title = keyScan.nextLine();
 
             System.out.printf("최대인원:(%d)? ", team.maxQty);
-            int maxUpdate = keyScan.nextInt();
+            updateTeam.maxQty = keyScan.nextInt();
             keyScan.nextLine(); 
-            team.maxQty = maxUpdate;
 
             System.out.printf("시작일(%s)? ", team.startDate);
-            String startUpdate = keyScan.nextLine();
-            team.startDate = startUpdate;
+            updateTeam.startDate = keyScan.nextLine();
 
             System.out.printf("종료일(%s)? ", team.endDate);
-            String endUpdate = keyScan.nextLine();
-            team.endDate = endUpdate;
+            updateTeam.endDate = keyScan.nextLine();
+            teams[i] = updateTeam; // 변경사항을 team[i] 로 넣는다.
             
             System.out.println("변경하였습니다.");
         }
@@ -261,6 +285,8 @@ public class App {
                 onMemberList();
             } else if (menu.equals("member/view")) {
                 onMemberView();
+            } else if (menu.equals("member/update")) {
+                onMemberUpdate();
             } else if (menu.equals("team/update")) {
                 onTeamUpdate();
             } else if (menu.equals("team/delete")) {

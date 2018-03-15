@@ -16,9 +16,9 @@ public class Exam04_1 {
         for (;i > 5;) {
             System.out.println(i);
             i++;
+        }
 
         System.out.println("--------------------");
-        int i = 1;
         for (;;) {
             if(i > 5) break;
             System.out.println(i);

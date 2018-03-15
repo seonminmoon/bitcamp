@@ -24,6 +24,8 @@ public class Exam02_2 {
         default:
             System.out.println("올바른 번호를 입력하세요.");
         }
+        // no 의 값이 case 에 해당되는 경우
+        // break 명령을 만날 때까지 아래로 계속 실행한다.
         
     }
 

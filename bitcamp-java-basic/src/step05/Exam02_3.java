@@ -7,6 +7,7 @@ public class Exam02_3 {
         // switch (값) {}
         // 값으로 가능한 데이터 타입은?
         // => 정수(byte, short, int, char), 문자열, 특별한 상수 Enum 타입
+        // => case 값으로 변수를 사용할 수 없다. 리터럴만 가능하다.
         byte b = 2;
         switch (b) {
         case 1:

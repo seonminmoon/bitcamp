@@ -33,6 +33,7 @@ public class Exam04_3 {
         String name2;
         for (name2 : names) // 컴파일 오류!
             System.out.println(name2);
-            */
+        */
+        
         }
     }
