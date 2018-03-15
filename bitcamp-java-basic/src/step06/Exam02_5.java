@@ -22,8 +22,11 @@ public class Exam02_5 {
         hello("홍길동");
         System.out.println("============");
         hello(); // names 배열 개수 - 1
+        System.out.println("============");
         
         hello("홍길동", "임꺽정", "유관순");
+
+        System.out.println("============");
 
         String[] arr = ("김구","안중근","윤봉길","유관순");
         hello(arr);        

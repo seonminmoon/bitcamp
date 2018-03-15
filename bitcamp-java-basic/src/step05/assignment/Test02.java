@@ -13,7 +13,7 @@ public class Test02 {
             int starCnt = 1;
             while (starCnt <= count) {
                 System.out.print("*");
-                starCnt++;
+                starCnt++; 
             }
             System.out.println();
             count++;
