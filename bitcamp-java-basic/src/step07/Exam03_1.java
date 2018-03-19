@@ -9,7 +9,7 @@ public class Exam03_1 {
         score.kor = 100;
         score.eng = 90;
         score.math = 85;
-  
+      
         // 다음 연사자는 계산을 수행할 때마다 인스턴스의 주소를 파라미터로 받아야 한다.
         Score2.calculator(score); 
         int i = 10;
