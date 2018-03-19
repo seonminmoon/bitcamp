@@ -1,12 +1,14 @@
 //리팩토링
 package bitcamp.java106.pms;
 import bitcamp.java106.pms.domain.Team;
+
 import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.controller.TeamController;
-import bitcamp.java106.pms.controller.MemberController;
-import bitcamp.java106.pms.util.Console;
+
 import java.util.Scanner;
 
+import bitcamp.java106.pms.controller.MemberController;
+import bitcamp.java106.pms.util.Console;
 // ver 0.2 
 public class App {
     static Scanner keyScan = new Scanner(System.in);

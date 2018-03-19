@@ -185,7 +185,6 @@ public class App {
             members[i] = updateMember;
             System.out.println("변경하였습니다.");
         }
-
     }
     static void onTeamUpdate() {
         System.out.println("[팀 정보 수정]");
@@ -193,8 +192,6 @@ public class App {
             System.out.println("해당 이름의 팀이 없습니다.");
             return;
         }
-        
-        
         int i = getTeamIndex(option);
         if (i == -1) {
             System.out.println("해당 이름의 팀이 없습니다.");
