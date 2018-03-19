@@ -1,7 +1,7 @@
-
+// 클래스 용도 - 사용자 정의 데이터 타입을 만들 때 사용
 package step07; // 소스폴더 포함하지 않는 그 밑 폴더부터 적는다
 
-public class Exam01_1 {
+public class ExamX_1 {
     public static void main(String[] args) {
         // 사용자 정의 데이터 타입을 사용하는 방법
         // => new 명령으로 메모리 준비

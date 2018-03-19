@@ -1,7 +1,7 @@
 // 사용자 정의 데이터 타입 - 메서드 활용
 package step07;
 
-public class Exam02_1{
+public class ExamX_2{
     public static void main(String[] args) {
         // 사용자 정의 데이터 타입의 값을 연산자를 사용하여 다뤄보자!
         Score2 score = new Score2();
@@ -17,9 +17,7 @@ public class Exam02_1{
         score.average = score.sum / 3f;
         */
         
-        Score2.calculator(score); // 피연산자 앞에 연산자
-        int i = 10;
-        ++i; // 피연산자 앞에 연산자 
+        Score2.calculator(score);
         
         System.out.printf("%s, %d, %d, %d \n합계, %d, %.1f \n",
                 score.name, score.kor, score.eng, score.math,
