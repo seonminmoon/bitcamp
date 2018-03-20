@@ -1,7 +1,7 @@
 // 메서드 분류 - 클래스 변수의 활용
 package step07;
 
-public class Exam03_2 {
+public class ExamY_3 {
     public static void main(String[] args) {
         // 클래스 변수는 오직 한 개만 존재하기 때문에
         // 여러 개의 작업을 분리하여 진행할 수 없다.

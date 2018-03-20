@@ -1,7 +1,7 @@
 // 메서드 분류 - 인스턴스 변수와 인스턴스 메서드 - this 사용
 package step07;
 
-public class Exam03_4 {
+public class ExamY_5 {
     public static void main(String[] args) {
 
         // 계산 결과를 개별적으로 관리하고 싶은가?

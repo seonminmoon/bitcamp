@@ -1,6 +1,6 @@
 //클래스 용도 - 소스 코드를 관리하기 쉽게 관련된 기능을 묶을 때 사용
 package step07; // 소스폴더 포함하지 않는 그 밑 폴더부터 적는다
-public class Exam01_2 {
+public class ExamY_1 {
     public static void main(String[] args) {
         int result = 0;
         
