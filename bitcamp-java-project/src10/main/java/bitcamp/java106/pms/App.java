@@ -1,130 +1,65 @@
-
 package bitcamp.java106.pms;
+
 import java.util.Scanner;
-import bitcamp.java106.pms.domain.Board;
 
-/* import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List; */
+import bitcamp.java106.pms.controller.BoardController;
+import bitcamp.java106.pms.controller.MemberController;
+import bitcamp.java106.pms.controller.TeamController;
+import bitcamp.java106.pms.util.Console;
 
-
+// ver 0.2 - member 메뉴를 처리하는 코드를 관련 클래스인 MemberController로 옮긴다.
+// ver 0.1 - team 메뉴를 처리하는 코드를 TeamController로 옮긴다.
 public class App {
     static Scanner keyScan = new Scanner(System.in);
+    public static String option = null; 
+    
+    static void onQuit() {
+        System.out.println("안녕히 가세요!");
+    }
+
+    static void onHelp() {
+        System.out.println("[도움말]");
+        System.out.println("팀 등록 명령 : team/add");
+        System.out.println("팀 조회 명령 : team/list");
+        System.out.println("팀 상세조회 명령 : team/view 팀명");
+        System.out.println("회원 등록 명령 : member/add");
+        System.out.println("회원 조회 명령 : member/list");
+        System.out.println("회원 상세조회 명령 : member/view 아이디");
+        System.out.println("종료 : quit");
+    }
+
     public static void main(String[] args) {
-        Board[] boards = new Board[1000];
-        int boardIndex = 0;
-        // List listA = new ArrayList();
+        // 클래스를 사용하기 전에 필수 값을 설정한다.
+        TeamController.keyScan = keyScan;
+        MemberController.keyScan = keyScan;
+        BoardController.keyScan = keyScan;
+        Console.keyScan = keyScan;
 
-        while(true) {
-            System.out.print("명령> ");
-            String[] arr = keyScan.nextLine().toLowerCase().split(" ");
-            String input = arr[0];
-            String option = null;
+        while (true) {
+            String[] arr = Console.prompt();
 
+            String menu = arr[0];
             if (arr.length == 2) {
                 option = arr[1];
+            } else {
+                option = null;
             }
-            if (input.equals("quit")) {
-                System.out.println("안녕히 가세요!");
+
+            if (menu.equals("quit")) {
+                onQuit();
                 break;
-            } else if (input.equals("board/add")) {
-                System.out.println("[게시글 등록]");
-                Board board = new Board(); 
-                System.out.print("제목? ");
-                board.name = keyScan.nextLine();
-                System.out.print("내용? ");
-                board.content = keyScan.nextLine();
-                System.out.print("등록일? ");
-                board.date = keyScan.nextLine();
-                boards[boardIndex++] = board; // 현재 board 값 저장
-                System.out.println();
-                continue;
-            } else if (input.equals("board/list")) {
-                System.out.println("[게시글 목록]");
-                for (int i = 0; i < boardIndex; i++) {
-                    if (boards[i] == null) continue;
-                    System.out.printf("%d, %s, %s \n",
-                    i, boards[i].name, boards[i].date);
-                }
-            } else if (input.equals("board/view")) {
-                System.out.println("[게시글 조회]");
-                Board board = null;
-                if (option == null) {
-                    System.out.println("게시물의 제목을 입력하세요.");
-                    System.out.println();   
-                    continue;
-                } else {
-                    for (int i = 0; i < boardIndex; i++) {
-                        if (option.toLowerCase().equals(boards[i].name)) {
-                            board = boards[i];
-                            break;
-                        }
-                    }
-                }
-                if (board == null) {
-                    System.out.println("없는 게시물이거나, 잘못 입력하셨습니다.");
-                } else {
-                    System.out.printf("제목: %s \n",board.name);
-                    System.out.printf("내용: %s \n",board.content);
-                    System.out.printf("등록일: %s \n",board.date);
-                }
-                
-            } else if (input.equals("board/update")) {
-                System.out.println("[게시글 변경]");
-                int i;
-                Board board = null;
-                if (option == null) {
-                    System.out.println("게시물의 제목을 입력하세요.");
-                    System.out.println();   
-                    continue;
-                } else {
-                    for (i = 0; i < boardIndex; i++) {
-                        if (option.toLowerCase().equals(boards[i].name)) {
-                            board = boards[i];
-                            break;
-                        }
-                    }
-                }
-                if (board == null) {
-                    System.out.println("없는 게시물이거나, 잘못 입력하셨습니다.");
-                } else {
-                    Board boardNull = new Board();
-                    System.out.printf("제목(%s) ",board.name);
-                    boardNull.name = keyScan.nextLine();
-                    System.out.printf("내용(%s) ",board.content);
-                    boardNull.content = keyScan.nextLine();
-                    boards[i].name = boardNull.name;
-                    boards[i].content = boardNull.content;
-                    System.out.println("변경되었습니다.");
-                }
-            } else if (input.equals("board/delete")) {
-                System.out.println("[게시글 삭제]");
-                Board board = null;
-                int i;
-                if (option == null) {
-                    System.out.println("게시물의 제목을 입력하세요.");
-                    System.out.println();   
-                    continue;
-                } else {
-                    for (i = 0; i < boardIndex; i++) {
-                        if (option.toLowerCase().equals(boards[i].name)) {
-                            board = boards[i];
-                            break;
-                        }
-                    }
-                }
-                if (board == null) {
-                    System.out.println("없는 게시물이거나, 잘못 입력하셨습니다.");
-                } else {
-                    System.out.println("정말 삭제하시겠습니까? (y,n) ");
-                    String okok = keyScan.nextLine().toLowerCase();
-                    if (okok.equals("y")) {
-                        boards[i] = null;
-                    }
-                    System.out.println("삭제되었습니다.");
-                    
-                }
+            } else if (menu.equals("help")) {
+                onHelp();
+            } else if (menu.startsWith("team/")) {
+                TeamController.service(menu, option);
+            } else if (menu.startsWith("member/")) {
+                MemberController.service(menu, option);
+            } else if (menu.startsWith("board/")) {
+                BoardController.service(menu, option);
+            }else {
+                System.out.println("명령어가 올바르지 않습니다.");
             }
+
             System.out.println();
         }
     }
