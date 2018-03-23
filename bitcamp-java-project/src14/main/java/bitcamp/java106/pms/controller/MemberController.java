@@ -1,36 +1,38 @@
 // 이 클래스는 회원 관련 기능을 모두 둔 클래스이다.
 package bitcamp.java106.pms.controller;
 
+import java.util.Scanner;
+
 import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.util.Console;
-import java.util.Scanner;
 
 public class MemberController {
     Scanner keyScan;
-    MemberDao memberDao;
- 
-    public MemberController(Scanner scanner, MemberDao memberDao) {
+
+    MemberDao memberDao = new MemberDao();
+    
+    public MemberController(Scanner scanner) {
         this.keyScan = scanner;
-        this.memberDao = memberDao;
     }
+
     public void service(String menu, String option) {
         if (menu.equals("member/add")) {
-            onMemberAdd();
+            this.onMemberAdd();
         } else if (menu.equals("member/list")) {
-            onMemberList();
+            this.onMemberList();
         } else if (menu.equals("member/view")) {
-            onMemberView(option);                
+            this.onMemberView(option);                
         } else if (menu.equals("member/update")) {
-            onMemberUpdate(option);                
+            this.onMemberUpdate(option);                
         } else if (menu.equals("member/delete")) {
-            onMemberDelete(option);                
+            this.onMemberDelete(option);                
         } else {
             System.out.println("명령어가 올바르지 않습니다.");
         }
     }
-     
-     void onMemberAdd() {
+
+    void onMemberAdd() {
         System.out.println("[회원 정보 입력]");
         Member member = new Member();
         
@@ -43,22 +45,20 @@ public class MemberController {
         System.out.print("암호? ");
         member.password = this.keyScan.nextLine();
 
-        // 회원 정보가 담겨있는 객체의 주소를 배열에 보관한다.
-        // this.members[this.memberIndex++] = member;
         memberDao.insert(member);
     }
 
-     void onMemberList() {
+    void onMemberList() {
         System.out.println("[회원 목록]");
         Member[] list = memberDao.list();
         for (int i = 0; i < list.length; i++) {
             if (list[i] == null) continue;
             System.out.printf("%s, %s, %s\n", 
-                list[i].id, list[i].email, list[i].password);
+                    list[i].id, list[i].email, list[i].password);
         }
     }
 
-     void onMemberView(String id) {
+    void onMemberView(String id) {
         System.out.println("[회원 정보 조회]");
         if (id == null) {
             System.out.println("아이디를 입력하시기 바랍니다.");
@@ -66,7 +66,7 @@ public class MemberController {
         }
         
         Member member = memberDao.get(id);
-        
+
         if (member == null) {
             System.out.println("해당 아이디의 회원이 없습니다.");
         } else {
@@ -76,20 +76,20 @@ public class MemberController {
         }
     }
 
-     void onMemberUpdate(String id) {
+    void onMemberUpdate(String id) {
         System.out.println("[회원 정보 변경]");
         if (id == null) {
             System.out.println("아이디를 입력하시기 바랍니다.");
             return;
         }
-
+        
         Member member = memberDao.get(id);
 
         if (member == null) {
             System.out.println("해당 아이디의 회원이 없습니다.");
         } else {
             Member updateMember = new Member();
-            System.out.printf("아이디: %s \n", member.id);
+            System.out.printf("아이디: %s\n", member.id);
             updateMember.id = member.id;
             System.out.printf("이메일(%s)? ", member.email);
             updateMember.email = this.keyScan.nextLine();
@@ -107,7 +107,7 @@ public class MemberController {
             System.out.println("아이디를 입력하시기 바랍니다.");
             return;
         }
-
+        
         Member member = memberDao.get(id);
 
         if (member == null) {
@@ -121,3 +121,5 @@ public class MemberController {
     }
     
 }
+
+//ver 14 - MemberDao를 사용하여 회원 데이터를 관리한다.

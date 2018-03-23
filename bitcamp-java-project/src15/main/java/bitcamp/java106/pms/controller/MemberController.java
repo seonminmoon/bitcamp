@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class MemberController {
     Scanner keyScan;
     MemberDao memberDao;
- 
+
     public MemberController(Scanner scanner, MemberDao memberDao) {
         this.keyScan = scanner;
         this.memberDao = memberDao;

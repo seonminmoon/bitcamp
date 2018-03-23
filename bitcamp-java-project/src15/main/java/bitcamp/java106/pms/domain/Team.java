@@ -30,9 +30,9 @@ public class Team {
     public boolean isExist(String memberId) {
         for (int i = 0; i < this.members.length; i++) {
             if (this.members[i] == null) continue;
-            if (this.members[i].id.equals(memberId)) {
+                this.members[i].id.equals(memberId)) {
                 return true;
-            }
+                }
         }
         return false;
     }
