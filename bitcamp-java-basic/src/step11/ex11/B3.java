@@ -12,6 +12,6 @@ public class B3 extends B {
         // 오버로딩이 되는 경우가 있기 때문에 
         // 이를 방지하기 위해 오버라이딩을 하는 메서드 앞에 
         // @Override를 붙임으로써 잘못 사용하는 경우를 방지하라!
-        System.out.println("B2의 m()");
+        System.out.println("B3의 m()");
     }
 }

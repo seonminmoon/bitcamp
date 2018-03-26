@@ -9,7 +9,7 @@ public class B2 extends B{
         // 이것은 오버라이딩이 아니라 오버로딩이 된 것이다.
         // 즉 float 파라미터를 받는 m() 메서드가 추가된 것이다.
         // 즉, 오버라이딩이 아니라 오버로딩 한 것이다.
-        System.out.println("B의 m()");
+        System.out.println("B2의 m()");
         
     }
     

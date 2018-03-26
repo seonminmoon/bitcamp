@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args){
-
-      
         Scanner sc = new Scanner(System.in);
         System.out.print("팀명? ");
         String teamName = sc.next();
