@@ -20,7 +20,7 @@ public class MemberController {
         } else if (menu.equals("member/list")) {
             onMemberList();
         } else if (menu.equals("member/view")) {
-            onMemberView(option);                
+            onMemberView(option);
         } else if (menu.equals("member/update")) {
             onMemberUpdate(option);                
         } else if (menu.equals("member/delete")) {
@@ -52,7 +52,6 @@ public class MemberController {
         System.out.println("[회원 목록]");
         Member[] list = memberDao.list();
         for (int i = 0; i < list.length; i++) {
-            if (list[i] == null) continue;
             System.out.printf("%s, %s, %s\n", 
                 list[i].getId(), list[i].getEmail(), list[i].getPassword());
         }
