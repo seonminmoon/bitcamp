@@ -1,8 +1,6 @@
 // contains() 와 hashCode(), equals() 의 관계
 package step12.ex1;
 
-// 배열을 이용하여 컬렉션 클래스 만들기 : AraayList
-
 public class Exam02_1 {
     public static void main(String[] args) {
         String s1 = new String("aaa");
@@ -17,8 +15,6 @@ public class Exam02_1 {
         print(list);
         
         System.out.println(list.contains(s4)); // list가 s4을 포함하고 있는가? false
-        
-        
     }
     
     static void print(ArrayList list) {

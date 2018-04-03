@@ -15,7 +15,7 @@ public class ArrayList {
         // 일반 메서드에서 생성자를 임의로 호출할 수 없다.
         // 다른 생성자를 호출할 때는 super 클래스의 생성자를 호출할 수 없다.
         // => 둘 중 하나만 첫 문장으로 올 수 있다.
-        //super(); // 컴파일 오류!
+        // super(); // 컴파일 오류!
         this(DEFAULT_CAPACITY);
     }
     

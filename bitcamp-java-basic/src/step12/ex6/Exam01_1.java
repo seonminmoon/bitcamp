@@ -22,7 +22,7 @@ public class Exam01_1 {
         map.put("s03", v3);
         map.put("s04", v4);
         
-        // 이전에 저장할 때 사용한 같은 키로 다른 값을 저장하면 기존 값을 덮어쓴다.
+        // 이전에 저장할 때 사용한 같은 키로 다른 값을 저장하면 최근 값으로 기존 값을 덮어쓴다.
         map.put("s04", v5);
         
         System.out.println(map.get("s01"));

@@ -1,9 +1,8 @@
 // java.util.HashMap - value 목록만 꺼내기
 package step12.ex6;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.Set;
 
 public class Exam02_3 {
 
@@ -22,14 +21,9 @@ public class Exam02_3 {
         map.put("s04", v4);
         map.put("s04", v5);
         
-        Set entrySet = map.entrySet(); // key/value가 한 쌍으로 묶여있는 객체들이 들어있다.
-        
-        for (Object obj : entrySet) {
-            // Set 컬렉션에 들어있는 개체는 원래 Entry 객체이다.
-            // Entry 객체에서 key와 값을 꺼내려면 
-            // 원래의 타입으로 형변환 해야한다.
-            Entry entry = (Entry) obj;
-            System.out.printf("%s=%s \n", entry.getKey(), entry.getValue());
+        Collection values = map.values();
+        for (Object value : values) {
+            System.out.println(value);
         }
     }
 }

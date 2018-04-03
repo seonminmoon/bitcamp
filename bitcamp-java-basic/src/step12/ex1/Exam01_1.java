@@ -1,11 +1,11 @@
 // 객체(의 주소) 목록을 다루는 클래스 - 컬렉션 클래스(collection class) 정의
 package step12.ex1;
 
-// 배열을 이용하여 컬렉션 클래스 만들기 : AraayList
+// 배열을 이용하여 컬렉션 클래스 만들기 : ArrayList
 
 public class Exam01_1 {
     public static void main(String[] args) {
-        ArrayList list = new ArrayList(100);
+        ArrayList list = new ArrayList();
         list.add("aaa");
         list.add("bbb");
         list.add("ccc");

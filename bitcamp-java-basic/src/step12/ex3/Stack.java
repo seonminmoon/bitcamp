@@ -19,8 +19,8 @@ public class Stack extends LinkedList {
         
         Bucket removedBucket = this.tail.prev;
         if (this.tail.prev.prev != null) { // 리스트에서 중간 버킷 제거 할때
-        this.tail.prev.prev.next = tail; //tail->빈 버킷
-        this.tail.prev = this.tail.prev.prev;
+        this.tail.prev.prev.next = tail; //tail->빈 버킷(빈 객차)
+        this.tail.prev = this.tail.prev.prev;            
         } else { // 리스트에서 맨 처음 버킷을 제거할 때
             head = tail;
             head.prev = null;
