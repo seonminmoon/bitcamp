@@ -99,8 +99,11 @@ public class BoardController implements Controller {
             System.out.printf("설명(%s)? ", board.getContent());
             updateBoard.setContent(this.keyScan.nextLine());
             updateBoard.setCreatedDate(board.getCreatedDate());
+            
             int index = boardDao.indexOf(board.getNo());
             boardDao.update(index, updateBoard);
+            
+            
             System.out.println("변경하였습니다.");
         }
     }
