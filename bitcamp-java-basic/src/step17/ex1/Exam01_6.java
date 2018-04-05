@@ -24,7 +24,7 @@ public class Exam01_6 {
 					return true; 
 				return false; 
 			}
-		});
+		}); 
 		
 		for (String name : names) {
 			System.out.println(name);

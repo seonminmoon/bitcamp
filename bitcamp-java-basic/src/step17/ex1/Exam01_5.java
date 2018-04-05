@@ -18,7 +18,7 @@ public class Exam01_5 {
 				if (name.endsWith(".java"))
 					return true; 
 				return false; 
-			}
+			} 
 		};
 		
 		File dir = new File(".");

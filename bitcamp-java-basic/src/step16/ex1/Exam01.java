@@ -1,5 +1,5 @@
 // 폴더정보 조회
-package step16;
+package step16.ex1;
 
 import java.io.File;
 
