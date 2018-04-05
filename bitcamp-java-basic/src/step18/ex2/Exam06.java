@@ -1,4 +1,4 @@
-// 클래스 정보 추출 - 구현 인터페이스 정보 알아내기 
+// 클래스 정보 추출 - 패키지 정보 알아내기 
 package step18.ex2;
 
 public class Exam06 {
