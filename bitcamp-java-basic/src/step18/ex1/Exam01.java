@@ -12,6 +12,8 @@ class A {
 public class Exam01 {
 	public static void main(String[] args) throws Exception{
 		// 클래스 로딩
+	    // 클래스 로딩은 한 번만 이루어진다!
+	    
 		// => 클래스가 로딩되어 있지 않다는 조건
 		// 1) 클래스의 스태틱 멤버(변수,메서드,중첩클래스)를 사용할 때
 		// 2) new 명령을 사용하여 인스턴스를 생성하려 할 때

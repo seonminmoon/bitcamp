@@ -16,6 +16,7 @@ public class Task {
     private int state;
     private Member worker;
     private Team team;
+   
     
     public Task(Team team) {
         this.no = count++;
@@ -81,6 +82,7 @@ public class Task {
 }
 
 //ver 17 - 사용자 정의 데이터 타입 생성
+
 
 
 

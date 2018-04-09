@@ -19,7 +19,7 @@ public class Exam03 {
 		// 자바의 모든 클래스는 "class"라는 특별한 스태틱 변수를 갖고 있다.
 		// "class" 변수에는 해당 클래스의 정보를 담은 class 객체의 주소가 저장되어 있다.
 		// 즉 다음 코드와 같은 값을 리턴한다.
-		// Class clazz = Class.forName("step18.ex1.Exam02$A");
+//		Class clazz = Class.forName("step18.ex1.Exam02$A");
 		
 		// 하지만 이 방식으로 클래스 로딩하면 static {} 블록을 실행하지 않는다.
 		// 물론 스태틱 멤버를 사용하는 최초의 순간에는 static 블록이 실행될 것이기 때문에

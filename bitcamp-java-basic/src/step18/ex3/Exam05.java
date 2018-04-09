@@ -27,7 +27,6 @@ public class Exam05 {
         // => 스태틱 메서드이기 때문에 인스턴스는 지정할 필요가 없다.
         m.invoke(null, 10, 20);
         
-        
         // 2) 인스턴스 메서드를 찾아 호출하기
         m = clazz.getMethod("minus", int.class, int.class);
         
@@ -36,6 +35,7 @@ public class Exam05 {
         
         Exam05 obj = new Exam05();
         m.invoke(obj, 10, 20); // OK!
+        
     }
 
 }

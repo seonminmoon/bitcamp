@@ -11,7 +11,7 @@ public class Exam05 {
 		Class clazz = Class.forName("step18.ex1.Exam05$A");
 		
 		// 타입(클래스) 정보만 있다면 인스턴스를 생성할 수 있다.
-		A obj = (A)clazz.newInstance();
+		A obj = (A) clazz.newInstance();
 		obj.m();
 	}
 } 
