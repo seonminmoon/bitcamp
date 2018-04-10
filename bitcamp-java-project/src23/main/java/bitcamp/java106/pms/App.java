@@ -21,7 +21,9 @@ import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.util.Console;
 
 public class App {
+    
     static ApplicationContext iocContainer;
+    
     static Scanner keyScan = new Scanner(System.in);
     public static String option = null; 
     
@@ -43,7 +45,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         
         // 기본 객체 준비
-        HashMap<String, Object> defaultBeans = new HashMap<>();
+        HashMap<String,Object> defaultBeans = new HashMap<>();
         defaultBeans.put("java.util.Scanner", keyScan);
         
         // 기본 객체와 함께 @Component가 붙은 클래스의 객체를 준비한다.
@@ -73,7 +75,9 @@ public class App {
                 onHelp();
             } else {
                 int slashIndex = menu.lastIndexOf("/");
-                String controllerKey = menu.substring(0, slashIndex);
+                String controllerKey = (slashIndex < 0) ? 
+                        menu : menu.substring(0, slashIndex);
+                
                 Controller controller = (Controller) iocContainer.getBean(controllerKey);
                 
                 if (controller != null) {
@@ -89,7 +93,7 @@ public class App {
     static void prepareMemberData() {
         MemberDao memberDao = (MemberDao) iocContainer.getBean(
                 "bitcamp.java106.pms.dao.MemberDao");
-                
+        
         Member member = new Member();
         member.setId("aaa");
         member.setEmail("aaa@test.com");
@@ -159,6 +163,8 @@ public class App {
 //ver 17 - Task 관리 기능 추가
 // ver 15 - TeamDao와 MemberDao 객체 생성. 
 //          팀 멤버를 다루는 메뉴 추가.
+
+
 
 
 

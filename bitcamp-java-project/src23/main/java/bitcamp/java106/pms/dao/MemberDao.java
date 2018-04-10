@@ -4,9 +4,8 @@ import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Member;
 
 @Component
-public class MemberDao extends AbstractDao<Member>{
+public class MemberDao extends AbstractDao<Member> {
     
-    // 다음 메서드는 내부에서만 사용할 것이기 때문에 공개하지 않는다.
     public int indexOf(Object key) {
         String id = (String) key;
         for (int i = 0; i < collection.size(); i++) {
@@ -21,6 +20,8 @@ public class MemberDao extends AbstractDao<Member>{
     
 }
 
+//ver 23 - @Component 애노테이션을 붙인다.
+//ver 22 - 추상 클래스 AbstractDao를 상속 받는다.
 //ver 19 - 우리 만든 ArrayList 대신 java.util.LinkedList를 사용하여 목록을 다룬다. 
 //ver 18 - ArrayList를 사용하여 객체(의 주소) 목록을 관리한다.
 //ver 16 - 인스턴스 변수를 직접 사용하는 대신 겟터, 셋터 사용.
