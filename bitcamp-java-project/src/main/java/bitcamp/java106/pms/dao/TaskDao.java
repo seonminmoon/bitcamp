@@ -1,17 +1,16 @@
 package bitcamp.java106.pms.dao;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.sql.Date;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
-import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.domain.Task;
-import bitcamp.java106.pms.domain.Team;
 
 @Component
 public class TaskDao extends AbstractDao<Task> {
@@ -19,42 +18,37 @@ public class TaskDao extends AbstractDao<Task> {
     public TaskDao() throws Exception {
         load();
     }
-    
     public void load() throws Exception {
-        Scanner in = new Scanner(new FileReader("data/task.csv"));
-        while (true) {
-            try {
-                String[] arr = in.nextLine().split(",");
-                Task task = new Task(null);
-                task.setNo(Integer.parseInt(arr[0]));
-                task.setTitle(arr[1]);
-                task.setStartDate(Date.valueOf(arr[2]));
-                task.setEndDate(Date.valueOf(arr[3]));
-                task.setState(Integer.parseInt(arr[4]));
-                task.setTeam(new Team(arr[5]));
-                task.setWorker(new Member(arr[6]));
-                this.insert(task);
-            } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
-                //e.printStackTrace();
-                break; // 반복문을 나간다.
+        try (
+        ObjectInputStream in = new ObjectInputStream(
+                               new BufferedInputStream(
+                               new FileInputStream("data/task.data")));
+        ){
+            while (true) {
+                try {
+                    this.insert((Task) in.readObject());
+                } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
+                    //e.printStackTrace();
+                    break; // 반복문을 나간다.
+                }
             }
         }
-        in.close();
     }
-    
+
     public void save() throws Exception {
-        PrintWriter out = new PrintWriter(new FileWriter("data/task.csv"));
-        
-        Iterator<Task> tasks = this.list();
-        
-        while (tasks.hasNext()) {
-            Task task = tasks.next();
-            out.printf("%d,%s,%s,%s,%d,%s,%s\n", task.getNo(), task.getTitle(),
-                    task.getStartDate(), task.getEndDate(),
-                    task.getState(), task.getTeam().getName(), 
-                    task.getWorker().getId());
+        try ( // catch 는 작성하지 않는다. 발생한 오류는 호출자에게 보내버림
+              // 왜냐면 무슨 오류인지 어떻게 해결해야되는지 알아야되기 때문임
+              // try 를 빼면 close 가 안되니깐 try는 남겨놓는다.
+              // try 빼고 close 만 하면 오류 발생 시 close 까지 가지 않고 오류 넘겨주고 메서드 끝나서 안됨
+        ObjectOutputStream out = new ObjectOutputStream(
+                                 new BufferedOutputStream(
+                                 new FileOutputStream("data/task.data")));
+        ) {
+            Iterator<Task> tasks = this.list();
+            while (tasks.hasNext()) {
+                out.writeObject(tasks.next());
+            }
         }
-        out.close();
     }
         
     // 기존의 list() 메서드로는 작업을 처리할 수 없기 때문에 

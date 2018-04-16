@@ -1,11 +1,12 @@
 package bitcamp.java106.pms.dao;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.sql.Date;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Team;
@@ -16,39 +17,37 @@ public class TeamDao extends AbstractDao<Team> {
     public TeamDao() throws Exception {
         load();
     }
-    
     public void load() throws Exception {
-        Scanner in = new Scanner(new FileReader("data/team.csv"));
-        while (true) {
-            try {
-                String[] arr = in.nextLine().split(",");
-                Team team = new Team();
-                team.setName(arr[0]);
-                team.setDescription(arr[1]);
-                team.setMaxQty(Integer.parseInt(arr[2]));
-                team.setStartDate(Date.valueOf(arr[3]));
-                team.setEndDate(Date.valueOf(arr[4]));
-                this.insert(team);
-            } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
-                //e.printStackTrace();
-                break; // 반복문을 나간다.
+        try (
+        ObjectInputStream in = new ObjectInputStream(
+                               new BufferedInputStream(
+                               new FileInputStream("data/team.data")));
+        ){
+            while (true) {
+                try {
+                    this.insert((Team) in.readObject());
+                } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
+                    //e.printStackTrace();
+                    break; // 반복문을 나간다.
+                }
             }
         }
-        in.close();
     }
-    
+
     public void save() throws Exception {
-        PrintWriter out = new PrintWriter(new FileWriter("data/team.csv"));
-        
-        Iterator<Team> teams = this.list();
-        
-        while (teams.hasNext()) {
-            Team team = teams.next();
-            out.printf("%s,%s,%d,%s,%s\n", 
-                    team.getName(), team.getDescription(), team.getMaxQty(),
-                    team.getStartDate(), team.getEndDate());
+        try ( // catch 는 작성하지 않는다 => 발생한 오류는 호출자에게 보내버리기 위함
+              // 왜냐면 무슨 오류인지 어떻게 해결해야되는지 알아야되기 때문이다.
+              // try 를 빼면 close 가 안되니깐 try는 남겨놓는다.
+              // try 빼고 close 만 하면 오류 발생 시 close 까지 가지 않고 오류 넘겨주고 메서드 끝나서 안됨
+        ObjectOutputStream out = new ObjectOutputStream(
+                                 new BufferedOutputStream(
+                                 new FileOutputStream("data/team.data")));
+        ) {
+            Iterator<Team> teams = this.list();
+            while (teams.hasNext()) {
+                out.writeObject(teams.next());
+            }
         }
-        out.close();
     }
         
     public int indexOf(Object key) {

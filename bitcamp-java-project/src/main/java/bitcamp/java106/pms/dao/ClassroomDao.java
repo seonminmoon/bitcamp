@@ -1,11 +1,12 @@
 package bitcamp.java106.pms.dao;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.sql.Date;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Classroom;
@@ -16,39 +17,38 @@ public class ClassroomDao extends AbstractDao<Classroom> {
     public ClassroomDao() throws Exception {
         load();
     }
-    
+
     public void load() throws Exception {
-        Scanner in = new Scanner(new FileReader("data/classroom.csv"));
-        while (true) {
-            try {
-                String[] arr = in.nextLine().split(",");
-                Classroom classroom = new Classroom();
-                classroom.setNo(Integer.parseInt(arr[0]));
-                classroom.setTitle(arr[1]);
-                classroom.setStartDate(Date.valueOf(arr[2]));
-                classroom.setEndDate(Date.valueOf(arr[3]));
-                classroom.setRoom(arr[4].equals(" ") ? "" : arr[4]);
-                this.insert(classroom);
-            } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
-                //e.printStackTrace();
-                break; // 반복문을 나간다.
+        try (
+        ObjectInputStream in = new ObjectInputStream(
+                               new BufferedInputStream(
+                               new FileInputStream("data/classroom.data")));
+        ){
+            while (true) {
+                try {
+                    this.insert((Classroom) in.readObject());
+                } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
+                    //e.printStackTrace();
+                    break; // 반복문을 나간다.
+                }
             }
         }
-        in.close();
     }
-    
+
     public void save() throws Exception {
-        PrintWriter out = new PrintWriter(new FileWriter("data/classroom.csv"));
-        
-        Iterator<Classroom> classrooms = this.list();
-        
-        while (classrooms.hasNext()) {
-            Classroom classroom = classrooms.next();
-            out.printf("%d,%s,%s,%s,%s\n", classroom.getNo(), classroom.getTitle(),
-                    classroom.getStartDate(), classroom.getEndDate(),
-                    classroom.getRoom().equals("") ? " " : classroom.getRoom());
+        try ( // catch 는 작성하지 않는다. 발생한 오류는 호출자에게 보내버림
+              // 왜냐면 무슨 오류인지 어떻게 해결해야되는지 알아야되기 때문임
+              // try 를 빼면 close 가 안되니깐 try는 남겨놓는다.
+              // try 빼고 close 만 하면 오류 발생 시 close 까지 가지 않고 오류 넘겨주고 메서드 끝나서 안됨
+        ObjectOutputStream out = new ObjectOutputStream(
+                                 new BufferedOutputStream(
+                                 new FileOutputStream("data/classroom.data")));
+        ) {
+            Iterator<Classroom> calssrooms = this.list();
+            while (calssrooms.hasNext()) {
+                out.writeObject(calssrooms.next());
+            }
         }
-        out.close();
     }
     
     public int indexOf(Object key) {

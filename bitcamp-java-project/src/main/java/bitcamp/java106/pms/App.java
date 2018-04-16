@@ -19,7 +19,7 @@ public class App {
     
     static Scanner keyScan = new Scanner(System.in);
     public static String option = null; 
-    
+        
     static void onQuit() {
         System.out.println("안녕히 가세요!");
         BoardDao boardDao = (BoardDao) iocContainer.getBean(BoardDao.class);
