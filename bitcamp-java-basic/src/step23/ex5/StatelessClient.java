@@ -19,7 +19,7 @@ public class StatelessClient {
                     Socket socket = new Socket("localhost", 8888);
                     PrintStream out = new PrintStream(socket.getOutputStream());
                     Scanner in = new Scanner(socket.getInputStream())) {
-    
+                    
                     out.println(str); // 서버에 보낸다. 
                     if (str.equals("")) { // 만약 값을 입력하지 않았으면 
                         System.out.println(in.nextLine()); // 서버가 보낸 결과를 출력한다.
