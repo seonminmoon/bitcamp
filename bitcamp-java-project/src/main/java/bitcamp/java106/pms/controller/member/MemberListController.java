@@ -1,31 +1,31 @@
 // Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller.member;
 
+import java.io.PrintWriter;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
 import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.domain.Member;
+import bitcamp.java106.pms.server.ServerRequest;
+import bitcamp.java106.pms.server.ServerResponse;
 
-@Component("member/list")
+@Component("/member/list")
 public class MemberListController implements Controller {
-    Scanner keyScan;
 
     MemberDao memberDao;
     
-    public MemberListController(Scanner scanner, MemberDao memberDao) {
-        this.keyScan = scanner;
+    public MemberListController(MemberDao memberDao) {
         this.memberDao = memberDao;
     }
-
-    public void service(String menu, String option) {
-        System.out.println("[회원 목록]");
+    @Override
+    public void service(ServerRequest request, ServerResponse response) {
+        PrintWriter out = response.getWriter();
         Iterator<Member> iterator = memberDao.list();
         while (iterator.hasNext()) {
             Member member = iterator.next();
-            System.out.printf("%s, %s, %s\n", 
+            out.printf("%s, %s, %s\n", 
                 member.getId(), member.getEmail(), member.getPassword());
         }
     }

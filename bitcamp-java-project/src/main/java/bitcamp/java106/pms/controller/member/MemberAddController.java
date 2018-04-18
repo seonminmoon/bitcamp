@@ -1,38 +1,35 @@
 // Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller.member;
 
-import java.util.Scanner;
+import java.io.PrintWriter;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
 import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.domain.Member;
+import bitcamp.java106.pms.server.ServerRequest;
+import bitcamp.java106.pms.server.ServerResponse;
 
-@Component("member/add")
+@Component("/member/add")
 public class MemberAddController implements Controller {
-    Scanner keyScan;
 
     MemberDao memberDao;
     
-    public MemberAddController(Scanner scanner, MemberDao memberDao) {
-        this.keyScan = scanner;
+    public MemberAddController(MemberDao memberDao) {
         this.memberDao = memberDao;
     }
 
-    public void service(String menu, String option) {
-        System.out.println("[회원 정보 입력]");
-        Member member = new Member();
+    public void service(ServerRequest request, ServerResponse response) {
+        PrintWriter out = response.getWriter();
         
-        System.out.print("아이디? ");
-        member.setId(this.keyScan.nextLine());
-
-        System.out.print("이메일? ");
-        member.setEmail(this.keyScan.nextLine());
-
-        System.out.print("암호? ");
-        member.setPassword(this.keyScan.nextLine());
+        Member member = new Member();
+        member.setId(request.getParameter("id"));
+        member.setEmail(request.getParameter("email"));
+        member.setPassword(request.getParameter("password"));
 
         memberDao.insert(member);
+        
+        out.println("등록 성공!");
     }
 
 }

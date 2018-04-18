@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Board;
+import bitcamp.java106.pms.domain.Classroom;
 
 @Component
 public class BoardDao extends AbstractDao<Board> {
@@ -27,7 +28,14 @@ public class BoardDao extends AbstractDao<Board> {
         
             while (true) {
                 try {
-                    this.insert((Board) in.readObject());
+                    // 작업 데이터를 읽을 때 작업 번호가 가장 큰 것으로
+                    // 카운트 값을 설정한다.
+                    Board board = (Board) in.readObject();
+                    if (board.getNo() >= Board.count)
+                        Board.count = board.getNo() + 1;
+                    // 다음에 새로 추가할 수업의 번호는 현재 읽은 작업 번호보다
+                    // 1 큰 값이 되게 한다.
+                    this.insert(board);
                 } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
                     //e.printStackTrace();
                     break; // 반복문을 나간다.

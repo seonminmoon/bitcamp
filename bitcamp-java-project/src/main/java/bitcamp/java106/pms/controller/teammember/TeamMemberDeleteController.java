@@ -1,6 +1,7 @@
 // Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller.teammember;
 
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
@@ -8,23 +9,26 @@ import bitcamp.java106.pms.controller.Controller;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.dao.TeamMemberDao;
 import bitcamp.java106.pms.domain.Team;
+import bitcamp.java106.pms.server.ServerRequest;
+import bitcamp.java106.pms.server.ServerResponse;
 
-@Component("team/member/delete")
+@Component("/team/member/delete")
 public class TeamMemberDeleteController implements Controller {
     
-    Scanner keyScan;
     TeamDao teamDao;
     TeamMemberDao teamMemberDao;
     
-    public TeamMemberDeleteController(Scanner scanner, 
+    public TeamMemberDeleteController(
             TeamDao teamDao, 
             TeamMemberDao teamMemberDao) {
-        this.keyScan = scanner;
         this.teamDao = teamDao;
         this.teamMemberDao = teamMemberDao;
     }
-    
-    public void service(String menu, String teamName) {
+
+    @Override
+    public void service(ServerRequest request, ServerResponse response) {
+        PrintWriter out = response.getWriter();
+        String teamName = request.getParameter("teamName");
         if (teamName == null) {
             System.out.println("팀명을 입력하시기 바랍니다.");
             return; 
@@ -32,22 +36,19 @@ public class TeamMemberDeleteController implements Controller {
         
         Team team = teamDao.get(teamName);
         if (team == null) {
-            System.out.printf("%s 팀은 존재하지 않습니다.", teamName);
+            out.printf("%s 팀은 존재하지 않습니다. \n", teamName);
             return;
         }
         
-        System.out.print("삭제할 팀원은? ");
-        String memberId = keyScan.nextLine();
+        String memberId = request.getParameter("memberId");
         
         if (!teamMemberDao.isExist(teamName, memberId)) {
-            System.out.println("이 팀의 회원이 아닙니다.");
+            out.println("이 팀의 회원이 아닙니다.");
             return;
         }
 
         teamMemberDao.deleteMember(teamName, memberId);
-        
-        System.out.println("[팀 멤버 삭제]");
-        System.out.println("삭제하였습니다.");
+        out.println("삭제하였습니다.");
     }
 }
 

@@ -1,6 +1,7 @@
 // Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller.task;
 
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
@@ -9,51 +10,43 @@ import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Task;
 import bitcamp.java106.pms.domain.Team;
+import bitcamp.java106.pms.server.ServerRequest;
+import bitcamp.java106.pms.server.ServerResponse;
 import bitcamp.java106.pms.util.Console;
 
-@Component("task/delete")
+@Component("/task/delete")
 public class TaskDeleteController implements Controller {
     
-    Scanner keyScan;
     TeamDao teamDao;
     TaskDao taskDao;
     
-    public TaskDeleteController(Scanner scanner, 
-            TeamDao teamDao, TaskDao taskDao) {
-        this.keyScan = scanner;
+    public TaskDeleteController(TeamDao teamDao, TaskDao taskDao) {
         this.teamDao = teamDao;
         this.taskDao = taskDao;
     }
-    
-    public void service(String menu, String option) {
-        if (option == null) {
-            System.out.println("팀명을 입력하시기 바랍니다.");
+    @Override
+    public void service(ServerRequest request, ServerResponse response) {
+        PrintWriter out = response.getWriter();
+        String teamName = request.getParameter("teamName");
+        if (teamName == null) {
+            out.println("팀명을 입력하시기 바랍니다.");
             return; 
         }
         
-        Team team = teamDao.get(option);
+        Team team = teamDao.get(teamName);
         if (team == null) {
-            System.out.printf("'%s' 팀은 존재하지 않습니다.", option);
+            out.printf("'%s' 팀은 존재하지 않습니다. \n", teamName);
             return;
         }
-        
-        System.out.println("[팀 작업 삭제]");
-        System.out.print("삭제할 작업의 번호? ");
-        int taskNo = Integer.parseInt(keyScan.nextLine());
-        
+        int taskNo = Integer.parseInt(request.getParameter("no"));
         Task task = taskDao.get(taskNo);
         if (task == null) {
-            System.out.printf("'%s'팀의 %d번 작업을 찾을 수 없습니다.\n",
-                    team.getName(), taskNo);
+            out.printf("'%s'팀의 %d번 작업을 찾을 수 없습니다.\n",
+                    teamName, taskNo);
             return;
         }
-        
-        if (Console.confirm("삭제하시겠습니까?")) {
             taskDao.delete(task.getNo());
-            System.out.println("삭제하였습니다.");
-        } else {
-            System.out.println("취소하였습니다.");
-        }
+            out.println("삭제하였습니다.");
     }
 }
 
