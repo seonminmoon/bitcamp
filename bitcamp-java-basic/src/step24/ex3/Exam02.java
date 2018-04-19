@@ -1,4 +1,4 @@
-// 스레드 만들기 II - Runnable 구현 
+// Runnable 인터페이스 구현 - Thread
 package step24.ex3;
 
 public class Exam02 {
