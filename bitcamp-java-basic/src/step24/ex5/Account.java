@@ -1,4 +1,5 @@
-package step24.ex5;
+// 강사님
+package step24.ex5; 
 
 public class Account {
     String accountId;
@@ -10,7 +11,12 @@ public class Account {
         
     }
     
-    public long withdraw(long money) {
+    // 한 번에 한 스레드만이 호출하도록 접근을 제한하고 싶다면
+    // 메서드 전체를 동기화 블록으로 선언하라!
+    // 어떻게? 메서드 앞에 synchronized를 붙인다.
+    // => 이 메서드처럼 여러 스레드가 접근했을 때 문제가 발생하는 critical section 이 아니면
+    //    synchronized 사용을 자제해라.
+    synchronized public long withdraw(long money) {
         // 문제점? 
         // 돈을 뽑고 저장이 제대로 안된 상태에서 
         // 딜레이 시간에 CPU를 뺏겨버려 100만원보다 더 많은 돈을 뽑는 경우가 발생한다.
