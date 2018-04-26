@@ -1,27 +1,25 @@
 package bitcamp.java106.pms.dao;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Classroom;
-import bitcamp.java106.pms.domain.Task;
+import bitcamp.java106.pms.jdbc.DataSource;
 
 @Component
 public class ClassroomDao {
+    DataSource dataSource;
+    
+    public ClassroomDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     public int delete(int no) throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
         try (
@@ -37,11 +35,8 @@ public class ClassroomDao {
     }
     
     public List<Classroom> selectList() throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver"); // 오토클로즈가 아니라서
         try (
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                    "java106","1111");
+            Connection con = dataSource.getConnection();
             PreparedStatement stmt = con.prepareStatement(
                     "select crno, titl, sdt, edt, room from pms_classroom");
             
@@ -62,12 +57,8 @@ public class ClassroomDao {
     }
 
     public int insert(Classroom classroom) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        
-        try ( // 현재 try()안에 있는 것들을 자동으로 close() 하기 위해서 try로 묶음!
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                "java106","1111");
+        try (
+            Connection con = dataSource.getConnection();
             PreparedStatement stmt = con.prepareStatement(
                 "insert into pms_classroom(titl,sdt,edt,room) values(?,?,?,?)");) {
         
@@ -81,12 +72,8 @@ public class ClassroomDao {
     }
 
     public int update(Classroom classroom) throws Exception {
-        
-        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                "java106","1111");
+            Connection con = dataSource.getConnection();
             PreparedStatement stmt = con.prepareStatement(
                 "update pms_classroom set titl=?, sdt=?, edt=?, room=? where crno=?");) {
             stmt.setString(1, classroom.getTitle());
@@ -100,15 +87,10 @@ public class ClassroomDao {
     }
 
     public Classroom selectOne(int no) throws Exception {
-
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        try ( // try() 안에 넣을 수 있는건 객체를 생성하는 변수만 넣을 수 있고 일반 코드는 넣을 수 없다.
-        Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                "java106","1111");
-        
-        PreparedStatement stmt = con.prepareStatement(
-                "select crno,titl,sdt,edt,room from pms_classroom where crno=?");) {
+        try (
+            Connection con = dataSource.getConnection();
+            PreparedStatement stmt = con.prepareStatement(
+            "select crno,titl,sdt,edt,room from pms_classroom where crno=?");) {
             
             stmt.setInt(1, no);
             try (ResultSet rs = stmt.executeQuery();) {

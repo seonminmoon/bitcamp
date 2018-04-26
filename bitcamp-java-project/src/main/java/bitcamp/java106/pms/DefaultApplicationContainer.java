@@ -3,31 +3,36 @@ package bitcamp.java106.pms;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
 
 import bitcamp.java106.pms.context.ApplicationContext;
 import bitcamp.java106.pms.controller.Controller;
+import bitcamp.java106.pms.jdbc.DefaultDataSource;
 import bitcamp.java106.pms.server.ServerRequest;
 import bitcamp.java106.pms.server.ServerResponse;
 
 public class DefaultApplicationContainer implements ApplicationContainer {
+    
     ApplicationContext iocContainer;
     
     public DefaultApplicationContainer() throws Exception {
-        // => 컨트롤러, DAO 등 클라이언트 요청을 처리하는 객체를 자동 생성한다.
-        iocContainer = new ApplicationContext("bitcamp.java106.pms");
+        // IoC 컨테이너에서 자동으로 생성되지 않는 객체를 미리 준비한다. 
+        HashMap<String,Object> objMap = new HashMap<>();
+        objMap.put("datasource", new DefaultDataSource("jdbc.properties"));
+        
+        //=> 컨트롤러, DAO 등 클라이언트 요청을 처리하는 객체를 자동 생성한다.
+        //=> 또한 이전에 미리 준비한 객체를 컨테이너에 포함시킨다.
+        iocContainer = new ApplicationContext("bitcamp.java106.pms", objMap);
     }
     
     @Override
     public String execute(String requestURI) {
-
         // 클라이언트가 보낸 데이터에서 명령어와 데이터를 분리하여 객체를 준비한다.
         ServerRequest request = new ServerRequest(requestURI);
         
         // 클라이언트 응답과 관련된 객체를 준비한다.
-        StringWriter memoryWriter = new StringWriter(); // 메모리 담는통?
+        StringWriter memoryWriter = new StringWriter();
         PrintWriter out = new PrintWriter(memoryWriter);
-        // 여기서 데코레이터는 PrintWriter
-        // Controller와의 연동, 값을 받아와서 memory통에 넣는 연결고리 역할
         
         ServerResponse response = new ServerResponse(out);
         
@@ -42,5 +47,6 @@ public class DefaultApplicationContainer implements ApplicationContainer {
         }
         return memoryWriter.toString();
     }
-
 }
+
+//ver 29 - 클래스 추가

@@ -1,24 +1,25 @@
 package bitcamp.java106.pms.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 import bitcamp.java106.pms.annotation.Component;
-import bitcamp.java106.pms.domain.Task;
+import bitcamp.java106.pms.jdbc.DataSource;
 
 @Component
 public class TeamMemberDao {
+    DataSource dataSource;
+    
+    public TeamMemberDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public int insert(String teamName, String memberId) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                "java106","1111");
+            Connection con = dataSource.getConnection();
             PreparedStatement stmt = con.prepareStatement(
                 "insert into pms_team_member(tnm,mid) values(?,?)");) {
         
@@ -29,11 +30,8 @@ public class TeamMemberDao {
     }
     
     public int delete(String teamName, String memberId) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                    "java106","1111");
+            Connection con = dataSource.getConnection();
             PreparedStatement stmt = con.prepareStatement(
                     "delete from pms_team_member where tnm=? and mid=?");) {
                         
@@ -45,11 +43,8 @@ public class TeamMemberDao {
     }
     
     public List<String> selectList(String teamName) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver"); // 오토클로즈가 아니라서 try 안에 넣지 않는다.
         try (
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                    "java106","1111");
+            Connection con = dataSource.getConnection();
             PreparedStatement stmt = con.prepareStatement(
                     "select mid from pms_team_member where tnm=?");) {
             
@@ -65,11 +60,8 @@ public class TeamMemberDao {
     }
     
     public boolean isExist(String teamName, String memberId) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver"); // 오토클로즈가 아니라서 try 안에 넣지 않는다.
         try (
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                    "java106","1111");
+            Connection con = dataSource.getConnection();
             PreparedStatement stmt = con.prepareStatement(
                     "select mid from pms_team_member where tnm=? and mid=?");) {
             
