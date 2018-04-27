@@ -1,4 +1,4 @@
-// Mybatis - SQL에 파라미터로 일반 객체 전달하기
+// Mybatis - INSERT 실행 후 자동 증가된 PK값 가져오기
 package step25.ex6;
 
 import java.io.InputStream;
@@ -24,9 +24,16 @@ public class Exam02_3 {
         board.setTitle("제목이래요!");
         board.setContent("내용이래요!");
         
+        System.out.printf("번호: %d\n", board.getNo());
+        System.out.printf("제목: %s\n", board.getTitle());
+        System.out.printf("내용: %s\n", board.getContent());
+        
         int count = sqlSession.insert("BoardMapper.insertBoard", board);
         System.out.println(count);
-        
+
+        System.out.printf("번호: %d\n", board.getNo());
+        System.out.printf("제목: %s\n", board.getTitle());
+        System.out.printf("내용: %s\n", board.getContent());
         // mybatis에서는 autocommit이 기본으로 false이다.
         // autocommit?
         // => insert/update/delete 과 같이 데이터를 변경하는 작업은
