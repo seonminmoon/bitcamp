@@ -1,101 +1,65 @@
 package bitcamp.java106.pms.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Board;
-import bitcamp.java106.pms.jdbc.DataSource;
 
 @Component
 public class BoardDao {
     
-    DataSource dataSource;
+    SqlSessionFactory sqlSessionFactory;
     
-    public BoardDao(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public BoardDao(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
     }
     
     public int delete(int no) throws Exception {
-        try (
-            Connection con = dataSource.getConnection();
-            PreparedStatement stmt = con.prepareStatement(
-                "delete from pms_board where bno=?");) {
-            
-            stmt.setInt(1, no);
-            return stmt.executeUpdate();
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
+            int count = sqlSession.delete(
+                    "bitcamp.java106.pms.dao.BoardDao.delete", no);
+            sqlSession.commit(); // 승인!
+            return count;
         } 
     }
     
     public List<Board> selectList() throws Exception {
-        try (
-            Connection con = dataSource.getConnection();
-            PreparedStatement stmt = con.prepareStatement(
-                "select bno,titl,cdt from pms_board");
-            ResultSet rs = stmt.executeQuery();) {
-            
-            ArrayList<Board> arr = new ArrayList<>();
-            while (rs.next()) {
-                Board board = new Board();
-                board.setNo(rs.getInt("bno"));
-                board.setTitle(rs.getString("titl"));
-                board.setCreatedDate(rs.getDate("cdt"));
-                arr.add(board);
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
+        // try() 의 마지막줄은 세미콜론(;)을 안찍어도 된다!
+            return sqlSession.selectList(
+                    "bitcamp.java106.pms.dao.BoardDao.selectList");
             }
-            return arr;
         }
-    }
 
     public int insert(Board board) throws Exception {
-        try (
-            Connection con = dataSource.getConnection();
-            PreparedStatement stmt = con.prepareStatement(
-                "insert into pms_board(titl,cont,cdt) values(?,?,now())");) {
-            
-            stmt.setString(1, board.getTitle());
-            stmt.setString(2, board.getContent());
-        
-            return stmt.executeUpdate();
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
+            int count = sqlSession.insert(
+                    "bitcamp.java106.pms.dao.BoardDao.insert", board);
+            sqlSession.commit();
+            return count;
+            }
         }
-    }
 
     public int update(Board board) throws Exception {
-        try (
-            Connection con = dataSource.getConnection();
-            PreparedStatement stmt = con.prepareStatement(
-                "update pms_board set titl=?, cont=?, cdt=now() where bno=?");) {
-            
-            stmt.setString(1, board.getTitle());
-            stmt.setString(2, board.getContent());
-            stmt.setInt(3, board.getNo());
-            return stmt.executeUpdate();
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
+            int count = sqlSession.update(
+                    "bitcamp.java106.pms.dao.BoardDao.update", board);
+            sqlSession.commit(); // 승인!
+            return count;
         }
     }
 
     public Board selectOne(int no) throws Exception {
-        try (
-            Connection con = dataSource.getConnection();
-            PreparedStatement stmt = con.prepareStatement(
-                "select bno,titl,cont,cdt from pms_board where bno=?");) {
-            
-            stmt.setInt(1, no);
-            
-            try (ResultSet rs = stmt.executeQuery();) {
-                if (!rs.next()) 
-                    return null;
-                
-                Board board = new Board();
-                board.setNo(rs.getInt("bno"));
-                board.setTitle(rs.getString("titl"));
-                board.setContent(rs.getString("cont"));
-                board.setCreatedDate(rs.getDate("cdt"));
-                return board;
-            }
-        }  
-    }
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
+                return sqlSession.selectOne(
+                        "bitcamp.java106.pms.dao.BoardDao.selectOne", no);
+                // selectOne에서 리턴하는건 Object 여야하는데 int no 가 리턴되어도 오류가 나지 않는다!
+                // => 오토박싱
+        }
+    }  
 }
 
 //ver 32 - DB 커넥션 풀 적용

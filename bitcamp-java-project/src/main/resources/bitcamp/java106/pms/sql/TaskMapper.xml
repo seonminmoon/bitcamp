@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="bitcamp.java106.pms.dao.TaskDao">
+
+     <resultMap type="Task" id="TaskMap">
+     <!-- Task task = new Task(); -->
+        <id column="tano" property="no"/>
+        <!-- task.setNo(rs.getInt("tano")); -->
+        
+        <result column="titl" property="title"/>
+        <result column="sdt" property="startDate"/>
+        <result column="edt" property="endDate"/>
+        <result column="stat" property="state"/>
+        <association property="worker" javaType="Member">
+            <id column="mid" property="id"/>
+        </association>
+        <!-- Member obj = new Member();
+             obj.setId(rs.getString("mid"));
+             task.setWorker(obj);
+         -->
+        <association property="team" javaType="Team">
+            <id column="tnm" property="name"/>
+        </association>
+        <!-- Team obj = new Team();
+             obj.setName(rs.getString("tnm"));
+             task.setTeam(obj);
+         -->
+        
+     </resultMap>
+     
+  <select id="selectList"
+          resultMap="TaskMap" parameterType="String">
+    select tano,titl,sdt,edt,stat,mid 
+    from pms_task 
+    where tnm=#{value}
+    <!-- limit #{startIndex}, #{pageSize} -->
+  </select>
+  
+  <insert id="insert" parameterType="Task"
+        useGeneratedKeys="true" keyColumn="tano" keyProperty="no">
+    insert into pms_task(titl,sdt,edt,mid,tnm) 
+    values(#{title},#{startDate},#{endDate},#{worker.id},#{team.name})
+  </insert>
+  
+  <!-- 파라미터 타입이 primitive type이나 wrapper 클래스, String 클래스인 경우, 
+       값을 꺼낼 때 프로퍼티 이름을 마음대로 해도 된다. (bno=#{}부분)
+  -->
+  <select id="selectOne" parameterType="int"
+          resultMap="TaskMap">
+    select titl,sdt,edt,stat,mid,tnm 
+    from pms_task 
+    where tano=#{no}
+  </select>
+  
+  <update id="update" parameterType="Task">
+    update pms_task set 
+    titl=#{title},
+    sdt=#{startDate},
+    edt=#{endDate},
+    mid=#{worker.id},
+    tnm=#{team.name}
+    where tano=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from pms_task 
+    where tano=#{no}
+  </delete>
+  
+  <update id="updateState" parameterType="map">
+    update pms_task set
+    stat=#{state}
+    where tano=#{no}
+  </update>
+</mapper>
+
+
+
+
+
+
+
