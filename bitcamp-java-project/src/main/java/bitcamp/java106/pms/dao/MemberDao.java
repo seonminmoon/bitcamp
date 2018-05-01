@@ -1,15 +1,11 @@
 package bitcamp.java106.pms.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Member;
 
 @Component
@@ -25,9 +21,9 @@ public class MemberDao {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
             int count = sqlSession.delete(
                     "bitcamp.java106.pms.dao.MemberDao.delete", id);
-            sqlSession.commit(); // 승인!
+            sqlSession.commit();
             return count;
-        } 
+        }
     }
     
     public List<Member> selectList() throws Exception {
@@ -41,7 +37,7 @@ public class MemberDao {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
             int count = sqlSession.insert(
                     "bitcamp.java106.pms.dao.MemberDao.insert", member);
-            sqlSession.commit(); // 승인!
+            sqlSession.commit();
             return count;
         }
     }
@@ -50,7 +46,7 @@ public class MemberDao {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
             int count = sqlSession.update(
                     "bitcamp.java106.pms.dao.MemberDao.update", member);
-            sqlSession.commit(); // 승인!
+            sqlSession.commit();
             return count;
         }
     }
@@ -59,10 +55,11 @@ public class MemberDao {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
             return sqlSession.selectOne(
                     "bitcamp.java106.pms.dao.MemberDao.selectOne", id);
-        }
+        }   
     }    
 }
 
+//ver 33 - Mybatis 적용
 //ver 32 - DB 커넥션 풀 적용
 //ver 31 - JDBC API 적용
 //ver 24 - File I/O 적용

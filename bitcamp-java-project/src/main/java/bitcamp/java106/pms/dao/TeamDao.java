@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Team;
 
 @Component
@@ -23,7 +23,6 @@ public class TeamDao {
                     "bitcamp.java106.pms.dao.TeamDao.delete", name);
             sqlSession.commit();
             return count;
-                    
         } 
     }
     
@@ -37,7 +36,7 @@ public class TeamDao {
     public int insert(Team team) throws Exception {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
             int count = sqlSession.insert(
-                    "bitcamp.java106.pms.dao.TeamDao.insert",team);
+                    "bitcamp.java106.pms.dao.TeamDao.insert", team);
             sqlSession.commit();
             return count;
         }
@@ -50,7 +49,6 @@ public class TeamDao {
             sqlSession.commit();
             return count;
         }
-        
     }
 
     public Team selectOne(String name) throws Exception {
@@ -61,6 +59,7 @@ public class TeamDao {
     }    
 }
 
+//ver 33 - Mybatis 적용 
 //ver 32 - DB 커넥션 풀 적용
 //ver 31 - JDBC API 적용
 //ver 24 - File I/O 적용

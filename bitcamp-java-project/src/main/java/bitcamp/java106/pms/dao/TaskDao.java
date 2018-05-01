@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Task;
 
 @Component
@@ -21,11 +21,10 @@ public class TaskDao {
     public int delete(int no) throws Exception {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
             int count = sqlSession.delete(
-                    "bitcamp.java106.pms.dao.TaskDao.delete",no);
+                    "bitcamp.java106.pms.dao.TaskDao.delete", no);
             sqlSession.commit();
             return count;
-        }
-        
+        } 
     }
     
     public List<Task> selectList(String teamName) throws Exception {
@@ -56,22 +55,25 @@ public class TaskDao {
     public Task selectOne(int no) throws Exception {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
             return sqlSession.selectOne(
-                    "bitcamp.java106.pms.dao.TaskDao.selectOne",no);
+                    "bitcamp.java106.pms.dao.TaskDao.selectOne", no);
         }
     }
 
     public int updateState(int no, int state) throws Exception {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
-            HashMap<String, Object> paramMap = new HashMap<>();
-            paramMap.put("tano", no); // key는 SQL 맵퍼 파일에 지정된 이름과 같아야 한다.
-            paramMap.put("stat", state);
+            HashMap<String,Object> paramMap = new HashMap<>();
+            paramMap.put("no", no);
+            paramMap.put("state", state);
+
+            int count = sqlSession.update(
+                    "bitcamp.java106.pms.dao.TaskDao.updateState", paramMap);
             sqlSession.commit();
-            return sqlSession.update(
-                    "bitcamp.java106.pms.dao.TaskDao.updateState");
+            return count;
         }
     }
 }
 
+//ver 33 - Mybatis 적용
 //ver 32 - DB 커넥션 풀 적용
 //ver 31 - JDBC API 적용
 //ver 24 - File I/O 적용

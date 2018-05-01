@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Board;
 
 @Component
@@ -21,18 +21,17 @@ public class BoardDao {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
             int count = sqlSession.delete(
                     "bitcamp.java106.pms.dao.BoardDao.delete", no);
-            sqlSession.commit(); // 승인!
+            sqlSession.commit();
             return count;
-        } 
+        }
     }
     
     public List<Board> selectList() throws Exception {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
-        // try() 의 마지막줄은 세미콜론(;)을 안찍어도 된다!
             return sqlSession.selectList(
                     "bitcamp.java106.pms.dao.BoardDao.selectList");
-            }
         }
+    }
 
     public int insert(Board board) throws Exception {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
@@ -40,28 +39,27 @@ public class BoardDao {
                     "bitcamp.java106.pms.dao.BoardDao.insert", board);
             sqlSession.commit();
             return count;
-            }
         }
+    }
 
     public int update(Board board) throws Exception {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
             int count = sqlSession.update(
                     "bitcamp.java106.pms.dao.BoardDao.update", board);
-            sqlSession.commit(); // 승인!
+            sqlSession.commit();
             return count;
         }
     }
 
     public Board selectOne(int no) throws Exception {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
-                return sqlSession.selectOne(
-                        "bitcamp.java106.pms.dao.BoardDao.selectOne", no);
-                // selectOne에서 리턴하는건 Object 여야하는데 int no 가 리턴되어도 오류가 나지 않는다!
-                // => 오토박싱
-        }
-    }  
+            return sqlSession.selectOne(
+                    "bitcamp.java106.pms.dao.BoardDao.selectOne", no);
+        }  
+    }
 }
 
+//ver 33 - Mybatis 적용 
 //ver 32 - DB 커넥션 풀 적용
 //ver 31 - JDBC API 적용
 //ver 24 - File I/O 적용
