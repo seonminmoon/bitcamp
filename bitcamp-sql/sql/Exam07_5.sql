@@ -9,7 +9,7 @@
 
 /* cross join : 두 테이블의 데이터를 1:1로 모두 연결한다.*/
 select mno, name from memb;
-select mno, work, bank from stnt;   
+select mno, work, bank from stnt;
 
 /* => mno가 어떤 테이블의 컬럼인지 지정하지 않으면 실행 오류!*/
 select mno, name, mno, work, bank
