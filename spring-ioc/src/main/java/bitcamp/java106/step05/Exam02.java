@@ -6,11 +6,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import bitcamp.java106.BeanUtils;
 
-public class Exam01 {
+public class Exam02 {
     public static void main(String[] args) {
         // 스프링 IoC 컨테이너는 ApplicationContext를 구현한다.
         ApplicationContext iocContainer = new ClassPathXmlApplicationContext(
-                "bitcamp/java106/step05/application-context-01.xml");
+                "bitcamp/java106/step05/application-context-02.xml");
         
         System.out.println(iocContainer.getBean("c1"));
         System.out.println(iocContainer.getBean("c2"));
