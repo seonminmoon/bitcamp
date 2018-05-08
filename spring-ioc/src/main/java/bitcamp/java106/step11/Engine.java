@@ -1,5 +1,8 @@
-package bitcamp.java106.step08;
+package bitcamp.java106.step11;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Engine {
     String maker;
     int valve;
