@@ -15,7 +15,7 @@ import bitcamp.java106.pms.AppConfig;
 // 
 @WebServlet(
 		urlPatterns="/initServlet", // value 는 urlPatterns 와 같다.
-		loadOnStartup=1)
+		loadOnStartup=1) 
 @SuppressWarnings("serial")
 public class InitServlet extends HttpServlet {
 	

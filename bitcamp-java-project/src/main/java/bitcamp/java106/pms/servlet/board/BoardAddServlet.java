@@ -40,15 +40,35 @@ public class BoardAddServlet extends HttpServlet {
         board.setContent(request.getParameter("content"));
         board.setCreatedDate(new Date(System.currentTimeMillis()));
         
-        response.setContentType("text/plain;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+		out.println("<!DOCTYPE html>");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<meta charset='UTF-8'>");
+		
+		// 지정된 시간이 경과하면 특정 서블릿을 요청하도록 태그를 삽입!
+		// => 웹 브라우저는 meta 태그의 내용대로 동작한다.
+		//    content='경과시간(초);url=요청할URL'
+		//
+		out.println("<meta http-equiv='Refresh' content='1;url=list'>");
+		
+		out.println("<title>게시물 등록</title>");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("<h1>게시물 등록 결과</h1>");
+		
         try {
             boardDao.insert(board);
-            out.println("등록 성공!");
+            out.println("<p>등록 성공!</p>");
         } catch (Exception e) {
-            out.println("등록 실패!");
+            out.println("<p>등록 실패!</p>");
             e.printStackTrace(out);
         }
+
+        out.println("</body>");
+        out.println("</html>");
     }
 
 }

@@ -31,19 +31,44 @@ public class BoardListServlet extends HttpServlet {
         
 		// 출력할 때 String 객체의 값(UTF-16)을 어떤 문자표를 사용하여 인코딩해서 보낼 것인지 설정한다.
 		// => 반드시 출력 스트림을 얻기 전에 설정해야 한다.
-		response.setContentType("text/plain;charset=UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		// => 텍스트,기본형으로 출력하는데 UTF-8로 출력해달라! 는 뜻
 		PrintWriter out = response.getWriter();
         
+		out.println("<!DOCTYPE html>");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<meta charset='UTF-8'>");
+		out.println("<title>게시물 목록</title>");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("<h1>게시물 목록</h1>");
+		
         try {
-            List<Board> list = boardDao.selectList();
+        	List<Board> list = boardDao.selectList();
+        	
+        	out.println("<p><a href='form.html'>새 글</a></p>");
+        	out.println("<table border='1'>");
+        	out.println("<tr>");
+        	out.println("	<th>번호</th><th>제목</th><th>등록일</th>");
+        	out.println("</tr>");
             for (Board board : list) {
-                out.printf("%d, %s, %s\n",
-                    board.getNo(), board.getTitle(), board.getCreatedDate());
+            	out.println("<tr>");
+                out.printf("	<td>%d</td><td><a href='view?no=%d'>%s</a></td><td>%s</td>\n",
+                    board.getNo(), 
+                    board.getNo(),
+                    board.getTitle(), 
+                    board.getCreatedDate());
+                out.println("<tr>");
             }
+            out.println("</table>");
         } catch (Exception e) {
-            out.println("목록 가져오기 실패!");
+            out.println("<p>목록 가져오기 실패!</p>");
             e.printStackTrace(out);
         }
+
+        out.println("</body>");
+        out.println("</html>");
     }
 }
 
