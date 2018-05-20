@@ -1,21 +1,17 @@
-// Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.servlet.team;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.server.ServerRequest;
-import bitcamp.java106.pms.server.ServerResponse;
 import bitcamp.java106.pms.servlet.InitServlet;
 
 @SuppressWarnings("serial")
@@ -26,35 +22,40 @@ public class TeamAddServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-    	teamDao = InitServlet.getApplicationContext().getBean(TeamDao.class);
+        teamDao = InitServlet.getApplicationContext().getBean(TeamDao.class);
     }
-    
+
     @Override
     protected void doPost(
-    		HttpServletRequest request, 
-    		HttpServletResponse response) throws ServletException, IOException {
-
-    	request.setCharacterEncoding("UTF-8");
-
-        Team team = new Team();
-        team.setName(request.getParameter("name"));
-        team.setDescription(request.getParameter("description"));
-        team.setMaxQty(Integer.parseInt(request.getParameter("maxQty")));
-        team.setStartDate(Date.valueOf(request.getParameter("startDate")));
-        team.setEndDate(Date.valueOf(request.getParameter("endDate")));
-
-        response.setContentType("text/plain;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException {
+        
+        request.setCharacterEncoding("UTF-8");
+        
         try {
+            Team team = new Team();
+            team.setName(request.getParameter("name"));
+            team.setDescription(request.getParameter("description"));
+            team.setMaxQty(Integer.parseInt(request.getParameter("maxQty")));
+            team.setStartDate(Date.valueOf(request.getParameter("startDate")));
+            team.setEndDate(Date.valueOf(request.getParameter("endDate")));
+            
             teamDao.insert(team);
-            out.println("등록 성공!");
+            response.sendRedirect("list");
+            
         } catch (Exception e) {
-            out.println("등록 실패!");
-            e.printStackTrace(out);
+            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
+            request.setAttribute("error", e);
+            request.setAttribute("title", "팀 등록 실패!");
+            요청배달자.forward(request, response);
         }
     }
+    
 }
 
+//ver 39 - forward 적용
+//ver 38 - redirect 적용
+//ver 37 - 컨트롤러를 서블릿으로 변경
 //ver 31 - JDBC API가 적용된 DAO 사용
 //ver 28 - 네트워크 버전으로 변경
 //ver 26 - TeamController에서 add() 메서드를 추출하여 클래스로 정의.
