@@ -28,9 +28,9 @@ public class TaskListServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-    	ApplicationContext iocContainer =
-    			WebApplicationContextUtils.getWebApplicationContext(
-    					this.getServletContext());
+        ApplicationContext iocContainer = 
+                WebApplicationContextUtils.getWebApplicationContext(
+                        this.getServletContext()); 
         teamDao = iocContainer.getBean(TeamDao.class);
         taskDao = iocContainer.getBean(TaskDao.class);
     }
@@ -96,6 +96,8 @@ public class TaskListServlet extends HttpServlet {
 
 }
 
+//ver 40 - CharacterEncodingFilter 필터 적용.
+//         request.setCharacterEncoding("UTF-8") 제거
 //ver 39 - forward 적용
 //ver 37 - 컨트롤러를 서블릿으로 변경
 //ver 31 - JDBC API가 적용된 DAO 사용

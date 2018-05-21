@@ -24,9 +24,9 @@ public class BoardViewServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-    	ApplicationContext iocContainer =
-    			WebApplicationContextUtils.getWebApplicationContext(
-    					this.getServletContext());
+        ApplicationContext iocContainer = 
+                WebApplicationContextUtils.getWebApplicationContext(
+                        this.getServletContext()); 
         boardDao = iocContainer.getBean(BoardDao.class);
     }
     

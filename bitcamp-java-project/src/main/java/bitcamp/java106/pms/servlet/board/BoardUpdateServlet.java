@@ -23,9 +23,9 @@ public class BoardUpdateServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-    	ApplicationContext iocContainer =
-    			WebApplicationContextUtils.getWebApplicationContext(
-    					this.getServletContext());
+        ApplicationContext iocContainer = 
+                WebApplicationContextUtils.getWebApplicationContext(
+                        this.getServletContext()); 
         boardDao = iocContainer.getBean(BoardDao.class);
     }
     
@@ -56,6 +56,7 @@ public class BoardUpdateServlet extends HttpServlet {
     
 }
 
+//ver 40 - 필터 적용
 //ver 39 - forward 적용
 //ver 38 - redirect 적용
 //ver 37 - BoardUpdateController를 서블릿으로 변경

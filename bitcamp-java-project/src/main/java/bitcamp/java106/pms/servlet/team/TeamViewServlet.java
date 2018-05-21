@@ -2,7 +2,6 @@ package bitcamp.java106.pms.servlet.team;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,10 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 
 import bitcamp.java106.pms.dao.TeamDao;
-import bitcamp.java106.pms.dao.TeamMemberDao;
-import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.servlet.InitServlet;
 import bitcamp.java106.pms.support.WebApplicationContextUtils;
 
 @SuppressWarnings("serial")
@@ -25,15 +21,13 @@ import bitcamp.java106.pms.support.WebApplicationContextUtils;
 public class TeamViewServlet extends HttpServlet {
 
     TeamDao teamDao;
-    TeamMemberDao teamMemberDao;
     
     @Override
     public void init() throws ServletException {
-    	ApplicationContext iocContainer =
-    			WebApplicationContextUtils.getWebApplicationContext(
-    					this.getServletContext());
-        teamDao = InitServlet.getApplicationContext().getBean(TeamDao.class);
-        teamMemberDao = InitServlet.getApplicationContext().getBean(TeamMemberDao.class);
+        ApplicationContext iocContainer = 
+                WebApplicationContextUtils.getWebApplicationContext(
+                        this.getServletContext()); 
+        teamDao = iocContainer.getBean(TeamDao.class);
     }
     
     @Override
@@ -95,16 +89,14 @@ public class TeamViewServlet extends HttpServlet {
             out.println("</form>");
             
             // 팀 회원의 목록을 출력하는 것은 TeamMemberListServlet에게 맡긴다.
-            RequestDispatcher 요청배달자 = request.getRequestDispatcher("team/member/list");
+            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/team/member/list");
             요청배달자.include(request, response);
-            // TeamMemberListServlet이 작업을 수행한후 이 서블릿으로 되돌아 온다.
-            
+            // TeamMemberListServlet이 작업을 수행한 후 이 서블릿으로 되돌아 온다.
+               
         } catch (Exception e) {
             RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             request.setAttribute("error", e);
             request.setAttribute("title", "팀 상세조회 실패!");
-            // 다른 서블릿으로 실행을 위임할 때,
-            // 이전까지 버퍼로 출력한 데이터는 버린다.
             요청배달자.forward(request, response);
         }
         out.println("</body>");
@@ -112,6 +104,8 @@ public class TeamViewServlet extends HttpServlet {
     }
 }
 
+//ver 40 - CharacterEncodingFilter 필터 적용.
+//         request.setCharacterEncoding("UTF-8") 제거
 //ver 39 - forward 적용
 //ver 37 - 컨트롤러를 서블릿으로 변경
 //ver 31 - JDBC API가 적용된 DAO 사용

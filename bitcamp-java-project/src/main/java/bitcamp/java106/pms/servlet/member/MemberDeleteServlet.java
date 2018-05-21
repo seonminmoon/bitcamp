@@ -22,9 +22,9 @@ public class MemberDeleteServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-    	ApplicationContext iocContainer =
-    			WebApplicationContextUtils.getWebApplicationContext(
-    					this.getServletContext());
+        ApplicationContext iocContainer = 
+                WebApplicationContextUtils.getWebApplicationContext(
+                        this.getServletContext()); 
         memberDao = iocContainer.getBean(MemberDao.class);
     }
 

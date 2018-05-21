@@ -30,9 +30,9 @@ public class TaskViewServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-    	ApplicationContext iocContainer =
-    			WebApplicationContextUtils.getWebApplicationContext(
-    					this.getServletContext());
+        ApplicationContext iocContainer = 
+                WebApplicationContextUtils.getWebApplicationContext(
+                        this.getServletContext()); 
         teamDao = iocContainer.getBean(TeamDao.class);
         taskDao = iocContainer.getBean(TaskDao.class);
         teamMemberDao = iocContainer.getBean(TeamMemberDao.class);

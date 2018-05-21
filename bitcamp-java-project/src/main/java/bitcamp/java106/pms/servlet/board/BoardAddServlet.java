@@ -23,9 +23,23 @@ public class BoardAddServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-    	ApplicationContext iocContainer =
-    			WebApplicationContextUtils.getWebApplicationContext(
-    					this.getServletContext());
+        // 1) 원래 코드는 InitServlet에서 스프링 IoC 컨테이너를 꺼냈다.
+        //boardDao = InitServlet.getApplicationContext().getBean(BoardDao.class);
+        
+        // 2) ServletContextListener의 구현체에서 스프링 IoC 컨테이너를 꺼냈다. 
+        // boardDao = ContextLoaderListener.getApplicationContext().getBean(BoardDao.class);
+        
+        // 3) 실제 스프링 WebMVC 프레임워크에서는 ContextLoaderListener에 
+        //    getApplicationContext()가 없다.
+        //    대신에 WebApplicationContextUtils라는 클래스에서 
+        //    getWebApplicationContext() 메서드를 호출하여 꺼낸다.
+        //    
+        //    이런 스프링 방식을 모방하기 위해 우리는 WebApplicationContextUtils라는 
+        //    클래스를 만들었고 그 클래스로부터 스프링 IoC 컨테이너를 꺼내게 하였다.
+        //    복잡하더라도 이해하라!
+        ApplicationContext iocContainer = 
+                WebApplicationContextUtils.getWebApplicationContext(
+                        this.getServletContext()); 
         boardDao = iocContainer.getBean(BoardDao.class);
     }
     
