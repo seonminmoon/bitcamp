@@ -1,6 +1,7 @@
 package bitcamp.java106.pms.servlet.teammember;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,7 +42,8 @@ public class TeamMemberDeleteServlet extends HttpServlet {
             if (count == 0) {
                 throw new Exception("<p>해당 팀원이 존재하지 않습니다.</p>");
             }
-            response.sendRedirect("../view?name=" + teamName);
+            response.sendRedirect("../view?name=" +
+            		URLEncoder.encode(teamName, "UTF-8"));
             
         } catch (Exception e) {
             RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
