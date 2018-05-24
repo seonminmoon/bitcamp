@@ -1,0 +1,4 @@
+<%@ page pageEncoding="UTF-8"%> 
+<p>Hello!</p>
+<p>세상에 한글이 안깨지는 이런일이</p>
+<p><%= a * 2%></p>
