@@ -10,6 +10,7 @@ public class Member implements Serializable {
     private String password;
     
     
+    
     @Override
     public int hashCode() {
         final int prime = 31;
