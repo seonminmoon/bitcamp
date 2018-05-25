@@ -14,7 +14,8 @@
 <div id='header'>
 <a href='/bitcamp-java-project/auth/login'>로그인</a></div>
 <h1>작업 보기(MVC)</h1>
-<%Task task = (Task)request.getAttribute("task"); %>
+<% Member members = (Member)request.getAttribute("members");
+Task task = (Task)request.getAttribute("task"); %>
 <form action='update' method='post'>
 <input type='hidden' name='no' value='1'>
 <table border='1'>
