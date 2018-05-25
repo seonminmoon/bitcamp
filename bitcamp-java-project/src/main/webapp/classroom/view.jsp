@@ -1,25 +1,21 @@
 <%@page import="bitcamp.java106.pms.domain.Classroom"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" 
+    contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset='UTF-8'>
-<title>강의 보기(MVC)</title>
+<title>강의 보기</title>
 </head>
 <body>
+<jsp:include page="/header.jsp"/>
+<h1>강의 보기(MVC + JSP 전용 태그)</h1>
 
-<%
-out.flush();
-request.getRequestDispatcher("/header.jsp").include(request, response);%>
+<jsp:useBean id="classroom" class="bitcamp.java106.pms.domain.Classroom" scope="request"/>
 
-<h1>강의 보기(MVC)</h1>
-<%
-Classroom classroom = (Classroom)request.getAttribute("classroom");
-%>
 <form action='update' method='post'>
-<input type='hidden' name='no' value='1'>
+<input type='hidden' name='no' value='<%=request.getParameter("no")%>'>
 <table border='1'>
 <tr>
     <th>강의명</th>
@@ -46,3 +42,5 @@ Classroom classroom = (Classroom)request.getAttribute("classroom");
 </form>
 </body>
 </html>
+
+    

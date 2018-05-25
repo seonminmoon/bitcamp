@@ -1,31 +1,28 @@
-<%@page import="bitcamp.java106.pms.domain.Member"%>
 <%@page import="bitcamp.java106.pms.domain.Team"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" 
+    contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset='UTF-8'>
-<title>팀 보기(MVC)</title>
+<title>팀 보기</title>
 </head>
 <body>
+<jsp:include page="/header.jsp"/>
+<h1>팀 보기(MVC + JSP 전용 태그)</h1>
 
-<%
-out.flush();
-request.getRequestDispatcher("/header.jsp").include(request, response);%>
+<jsp:useBean id="team" class="bitcamp.java106.pms.domain.Team" scope="request"/>
 
-<h1>팀 보기(MVC)</h1>
-<%
-Team team = (Team)request.getAttribute("team");
-%>
 <form action='update' method='post'>
 <table border='1'>
 <tr>
-    <th>팀명</th><td><input type="text" name="name" value='<%=team.getName()%>' readonly></td>
+    <th>팀명</th>
+    <td><input type="text" name="name" value='<%=team.getName()%>' readonly></td>
 </tr>
 <tr>
-    <th>설명</th><td><textarea name="description" 
+    <th>설명</th>
+    <td><textarea name="description" 
         rows="6" cols="60"><%=team.getDescription()%></textarea></td>
 </tr>
 <tr>
@@ -48,9 +45,8 @@ Team team = (Team)request.getAttribute("team");
 <a href='../task/list?teamName=<%=team.getName()%>'>작업목록</a>
 </p>
 </form>
-
-<%
-out.flush();
-request.getRequestDispatcher("/team/member/list.jsp").include(request, response);%>
+<jsp:include page="/team/member/list.jsp"/>
 </body>
 </html>
+
+    

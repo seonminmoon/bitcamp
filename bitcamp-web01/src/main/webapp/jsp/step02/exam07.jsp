@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>exam06</title>
+<title>exam07</title>
 </head>
 <body>
 <h1>지시문(directive) element): include</h1>

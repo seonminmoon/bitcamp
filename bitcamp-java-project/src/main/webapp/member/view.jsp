@@ -1,24 +1,21 @@
 <%@page import="bitcamp.java106.pms.domain.Member"%>
-<%@page import="bitcamp.java106.pms.domain.Classroom"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" 
+    contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset='UTF-8'>
-<title>멤버 보기(MVC)</title>
+<title>멤버 보기</title>
 </head>
 <body>
+<jsp:include page="/header.jsp"/>
+<h1>멤버 보기(MVC + JSP 전용 태그)</h1>
 
-<%
-out.flush();
-request.getRequestDispatcher("/header.jsp").include(request, response);%>
+<jsp:useBean id="member" class="bitcamp.java106.pms.domain.Member" scope="request"/>
 
-<h1>멤버 보기(MVC)</h1>
 <form action='update' method='post'>
 <table border='1'>
-<% Member member = (Member)request.getAttribute("member"); %>
 <tr><th>아이디</th><td>
     <input type='text' name='id' value='<%=member.getId()%>' readonly></td></tr>
 <tr><th>이메일</th>
@@ -35,4 +32,6 @@ request.getRequestDispatcher("/header.jsp").include(request, response);%>
 </form>
 </body>
 </html>
+
+
     
