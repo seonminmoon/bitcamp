@@ -30,14 +30,10 @@ public class TeamListServlet extends HttpServlet {
                         this.getServletContext()); 
         teamDao = iocContainer.getBean(TeamDao.class);
     }
-
-
     @Override
     protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
-        
-        
         try {
             List<Team> list = teamDao.selectList();
             request.setAttribute("list", list);

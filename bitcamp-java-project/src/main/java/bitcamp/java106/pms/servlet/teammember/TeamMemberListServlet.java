@@ -40,8 +40,7 @@ public class TeamMemberListServlet extends HttpServlet {
             String name = request.getParameter("name");
             List<Member> members = teamMemberDao.selectListWithEmail(name);
             request.setAttribute("members", members);
-            request.setAttribute("name", name);
-            response.setContentType("text/html;charset=UTF-8");
+//            response.setContentType("text/html;charset=UTF-8"); => list.jsp 에서 했기 때문에 안써도됨
             request.getRequestDispatcher("/teammember/list.jsp").include(request, response);
             
         } catch (Exception e) {

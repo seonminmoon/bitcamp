@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="bitcamp.java106.pms.domain.Task"%>
 <%@page import="bitcamp.java106.pms.domain.Member"%>
 <%@page import="bitcamp.java106.pms.domain.Team"%>
@@ -11,13 +12,15 @@
 <title>작업 보기(MVC)</title>
 </head>
 <body>
-<div id='header'>
-<a href='/bitcamp-java-project/auth/login'>로그인</a></div>
+
+<%
+out.flush();
+request.getRequestDispatcher("/header.jsp").include(request, response);%>
+
 <h1>작업 보기(MVC)</h1>
-<% Member members = (Member)request.getAttribute("members");
-Task task = (Task)request.getAttribute("task"); %>
+<% Task task = (Task)request.getAttribute("task"); %>
 <form action='update' method='post'>
-<input type='hidden' name='no' value='1'>
+<input type='hidden' name='no' value='<%=request.getParameter("no")%>'>
 <table border='1'>
 <tr>
     <th>팀명</th><td><input type='text' name='teamName' value='<%=task.getTeam().getName()%>' readOnly></td>
@@ -34,7 +37,11 @@ Task task = (Task)request.getAttribute("task"); %>
     <td>
         <select name='memberId'>
             <option value=''>--선택 안함--</option>
-            <option selected><%=task.getWorker().getId()%></option>
+            <option selected>
+            <% List<Member> members = (List<Member>)request.getAttribute("members");
+            
+            %>
+            </option>
         </select>
     </td>
 </tr>
@@ -47,7 +54,7 @@ Task task = (Task)request.getAttribute("task"); %>
 </tr>
 </table>
 <button>변경</button> 
-<a href='delete?no=<%=task.getNo()%>&teamName=<%=task.getTeam().getName()%>'>삭제</a>
+<a href='delete?no=<%=request.getParameter("no")%>&teamName=<%=task.getTeam().getName()%>'>삭제</a>
 </form>
 </body>
 </html>

@@ -12,8 +12,11 @@
 <title>멤버 목록(MVC)</title>
 </head>
 <body>
-<div id='header'>
-<a href='/bitcamp-java-project/auth/login'>로그인</a></div>
+
+<%
+out.flush();
+request.getRequestDispatcher("/header.jsp").include(request, response);%>
+
 <h1>멤버 목록(MVC)</h1>
 <p><a href='form.html'>새회원</a></p>
 <table border='1'>

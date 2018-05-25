@@ -9,8 +9,11 @@
 <title>작업 목록(MVC)</title>
 </head>
 <body>
-<div id='header'>
-<a href='/bitcamp-java-project/auth/login'>로그인</a></div>
+
+<%
+out.flush();
+request.getRequestDispatcher("/header.jsp").include(request, response);%>
+
 <%
 List<Task> list = (List<Task>)request.getAttribute("list");
 String teamName = (String)request.getAttribute("teamName");

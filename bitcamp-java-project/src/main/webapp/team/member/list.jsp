@@ -6,17 +6,19 @@
 
 <h2>회원 목록(MVC)</h2>
 <% List<Member> members = (List<Member>)request.getAttribute("members");
-String name = (String)request.getAttribute("name");
-for (Member member : members) {
 %>
 <form action='member/add' method='post'>
 <input type='text' name='memberId' placeholder='회원아이디'>
-<input type='hidden' name='teamName' value='<%=name%>'>
+<input type='hidden' name='teamName' value='<%=request.getParameter("name")%>'>
 <button>추가</button>
 </form>
 <table border='1'>
 <tr><th>아이디</th><th>이메일</th><th> </th></tr>
-<tr><td><%=member.getId()%></td><td><%=member.getEmail()%></td>
-<td><a href='member/delete?teamName=<%=name%>&memberId=<%=member.getId()%>'>삭제</a></td></tr>
+<% for (Member member : members) { %>
+<tr>
+	<td><%=member.getId()%></td>
+	<td><%=member.getEmail()%></td>
+	<td><a href='member/delete?teamName=<%=request.getParameter("name")%>&memberId=<%=member.getId()%>'>삭제</a></td>
+</tr>
 </table>
 <%}%>
