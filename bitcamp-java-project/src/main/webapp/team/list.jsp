@@ -1,7 +1,7 @@
 <%@ page language="java" 
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +18,7 @@
 </tr>
 <c:forEach items="${list}" var="team">
 <tr>
-    <td><a href='view?name=${team.name}'>${team.name}</a></td>
+    <td><a href='view.do?name=${team.name}'>${team.name}</a></td>
     <td>${team.maxQty}</td>
     <td>${team.startDate}~${team.endDate}</td>
 </tr>

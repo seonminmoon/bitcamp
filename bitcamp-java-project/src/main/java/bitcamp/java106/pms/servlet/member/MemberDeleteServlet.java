@@ -39,17 +39,16 @@ public class MemberDeleteServlet extends HttpServlet {
             if (count == 0) {
                 throw new Exception("해당 회원이 없습니다.");
             }
-            response.sendRedirect("list");
+            request.setAttribute("viewUrl", "redirect:list.do");
             
         } catch (Exception e) {
-            request.setAttribute("error", e);
-            request.setAttribute("title", "회원 삭제 실패!");
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            throw new ServletException(e);
         }
     }
     
 }
 
+//ver 45 - 프론트 컨트롤러 적용
 //ver 42 - JSP 적용
 //ver 39 - forward 적용
 //ver 38 - redirect 적용

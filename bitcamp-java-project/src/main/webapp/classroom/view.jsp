@@ -1,4 +1,3 @@
-<%@page import="bitcamp.java106.pms.domain.Classroom"%>
 <%@ page language="java" 
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,14 +9,13 @@
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
-<h1>강의 보기(MVC + JSP 전용 태그 + EL)</h1>
-
-<form action='update' method='post'>
-<input type='hidden' name='no' value='${requestScope.no}'>
+<h1>강의 보기(MVC + JSP 전용 태그 + EL + JSTL)</h1>
+<form action='update.do' method='post'>
+<input type='hidden' name='no' value='${classroom.no}'>
 <table border='1'>
 <tr>
     <th>강의명</th>
-    <td><input type='text' name='title' value='${classroom.no}'></td>
+    <td><input type='text' name='title' value='${classroom.title}'></td>
 </tr>
 <tr>
     <th>시작일</th>
@@ -33,9 +31,9 @@
 </tr>
 </table>
 <p>
-<a href='list'>목록</a>
+<a href='list.do'>목록</a>
 <button>변경</button>
-<a href='delete?no=${classroom.no}'>삭제</a>
+<a href='delete.do?no=${classroom.no}'>삭제</a>
 </p>
 </form>
 </body>

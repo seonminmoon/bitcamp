@@ -42,17 +42,16 @@ public class ClassroomAddServlet extends HttpServlet {
             classroom.setRoom(request.getParameter("room"));
             
             classroomDao.insert(classroom);
-            response.sendRedirect("list");
+            request.setAttribute("viewUrl", "redirect:list.do");
             
         } catch (Exception e) {
-            request.setAttribute("error", e);
-            request.setAttribute("title", "강의 등록 실패!");
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            throw new ServletException(e);
         }
     }
     
 }
 
+//ver 45 - 프론트 컨트롤러 적용
 //ver 42 - JSP 적용
 //ver 40 - 필터 적용
 //ver 39 - forward 적용

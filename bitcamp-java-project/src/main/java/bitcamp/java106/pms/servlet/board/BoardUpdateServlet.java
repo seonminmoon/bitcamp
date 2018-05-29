@@ -43,17 +43,17 @@ public class BoardUpdateServlet extends HttpServlet {
             if (count == 0) {
                 throw new Exception("해당 게시물이 존재하지 않습니다.");
             } 
-            response.sendRedirect("list");
+            
+            request.setAttribute("viewUrl", "redirect:list.do");
             
         } catch (Exception e) {
-            request.setAttribute("error", e);
-            request.setAttribute("title", "게시물 변경 실패!");
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            throw new ServletException(e);
         }
     }
     
 }
 
+//ver 45 - 프론트 컨트롤러 적용
 //ver 42 - JSP 적용
 //ver 40 - 필터 적용
 //ver 39 - forward 적용
