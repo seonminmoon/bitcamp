@@ -22,8 +22,8 @@ public class Exam01 {
         for (Board board : list) {
             System.out.printf("%d, %s, %s \n", 
                     board.getNo(),
-                    board.getTitle(),
+                    board.getTitle(),  
                     board.getRegisteredDate());
         }
-    }
+    } 
 }
