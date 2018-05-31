@@ -9,11 +9,16 @@ import org.springframework.beans.factory.FactoryBean;
 
 public class SqlSessionFactoryFactoryBean 
     implements FactoryBean<SqlSessionFactory>{
-
+    
+    String configLocation;
+    
+    public void setConfigLocation(String configLocation) {
+        this.configLocation = configLocation;
+    }
+    
     @Override
     public SqlSessionFactory getObject() throws Exception {
-        InputStream in = Resources.getResourceAsStream(
-                "bitcamp/java106/step12/ex2/mybatis-config.xml");
+        InputStream in = Resources.getResourceAsStream(configLocation);
         return new SqlSessionFactoryBuilder().build(in);
     }
 
