@@ -27,19 +27,26 @@
      
     <!-- 위에서 정의한 연결 정보를 사용하고 싶다면,
          resultMap="연결정보아이디" 를 설정하라! -->     
-  <select id="selectList" resultMap="BoardMap">
+  <select id="selectList" resultMap="BoardMap" parameterType="map">
     select 
     bno, <!-- BoardMap의 연결정보를 참조하기 때문에 별명을 주지 않아도 된다. -->
     titl,
     cont,
     rdt
-     from ex_board
+    from ex_board
+    order by bno desc
+    limit #{startIndex}, #{pageSize}
   </select>
   
   <insert id="insert" parameterType="Board">
     insert into ex_board(titl,cont,rdt) 
     values(#{title},#{content},now())
   </insert>  
+  
+   <delete id="delete" parameterType="int">
+    delete from ex_board
+    where bno=#{value} 
+  </delete>  
   
 </mapper>
 

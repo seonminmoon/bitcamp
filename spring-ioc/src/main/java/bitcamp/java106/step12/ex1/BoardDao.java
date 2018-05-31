@@ -1,5 +1,6 @@
 package bitcamp.java106.step12.ex1;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -17,9 +18,13 @@ public class BoardDao {
         this.sqlSessionFactory = sqlSessionFactory;
     }
     
-    public List<Board> selectList() {
+    public List<Board> selectList(int pageNo, int pageSize) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("startIndex", (pageNo - 1) * pageSize);
+        params.put("pageSize", pageSize);
+        
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
-            return sqlSession.selectList("BoardMapper.selectList");
+            return sqlSession.selectList("BoardMapper.selectList", params);
         }
     }
 
@@ -30,6 +35,14 @@ public class BoardDao {
             return count;
         }
     }
+    public int delete(int no) {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
+            int count = sqlSession.insert("BoardMapper.delete", no);
+            sqlSession.commit();
+            return count;
+        }
+    }
+    
 }
 
 //ver 33 - Mybatis 적용 
