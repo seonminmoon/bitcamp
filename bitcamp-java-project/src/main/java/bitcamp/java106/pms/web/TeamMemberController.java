@@ -1,10 +1,13 @@
 package bitcamp.java106.pms.web;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.dao.TeamDao;
@@ -12,61 +15,88 @@ import bitcamp.java106.pms.dao.TeamMemberDao;
 import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.domain.Team;
 
-@Component("/team/member")
+@Controller
+@RequestMapping("/team/member")
 public class TeamMemberController {
     
     TeamDao teamDao;
     MemberDao memberDao;
     TeamMemberDao teamMemberDao;
     
-    public TeamMemberController(TeamDao teamDao,MemberDao memberDao,TeamMemberDao teamMemberDao) {
+    public TeamMemberController(TeamDao teamDao, 
+            MemberDao memberDao,
+            TeamMemberDao teamMemberDao) {
         this.teamDao = teamDao;
         this.memberDao = memberDao;
         this.teamMemberDao = teamMemberDao;
     }
-
+    
     @RequestMapping("/add")
-    public String add(@RequestParam("teamName") String teamName,
-                      @RequestParam("memberId") String memberId) throws Exception {
+    public String add(
+            @RequestParam("teamName") String teamName,
+            @RequestParam("memberId") String memberId,
+            Map<String,Object> map) throws Exception {
+        
         Team team = teamDao.selectOne(teamName);
         if (team == null) {
             throw new Exception(teamName + " 팀은 존재하지 않습니다.");
         }
         Member member = memberDao.selectOne(memberId);
         if (member == null) {
-            throw new Exception(memberId + " 회원은 없습니다.");
+            map.put("message", "해당 회원이 없습니다!");
+            return "/team/member/fail.jsp";
         }
-        if (teamMemberDao.isExist(teamName, memberId)) {
-            throw new Exception("이미 등록된 회원입니다.");
+        
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("teamName", teamName);
+        params.put("memberId", memberId);
+        
+        if (teamMemberDao.isExist(params)) {
+            map.put("message", "이미 등록된 회원입니다.");
+            return "/team/member/fail.jsp";
         }
-        teamMemberDao.insert(teamName, memberId);
+        teamMemberDao.insert(params);
         return "redirect:../view.do?name=" + 
-            URLEncoder.encode(teamName, "UTF-8");
+                URLEncoder.encode(teamName, "UTF-8");
     }
     
     @RequestMapping("/delete")
     public String delete(
-                @RequestParam("teamName") String teamName,
-                @RequestParam("memberId") String memberId) throws Exception {
+            @RequestParam("teamName") String teamName,
+            @RequestParam("memberId") String memberId,
+            Map<String,Object> map) throws Exception {
+         
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("teamName", teamName);
+        params.put("memberId", memberId);
         
-        int count = teamMemberDao.delete(teamName, memberId);
+        int count = teamMemberDao.delete(params);
         if (count == 0) {
-            throw new Exception("<p>해당 팀원이 존재하지 않습니다.</p>");
+            map.put("message", "해당 회원이 없습니다!");
+            return "/team/member/fail.jsp";
         }
         return "redirect:../view.do?name=" + 
-            URLEncoder.encode(teamName, "UTF-8");
+                URLEncoder.encode(teamName, "UTF-8");
+        // 개발자가 요청이나 응답헤더를 직접 작성하여 값을 주고 받으로 한다면,
+        // URL 인코딩과 URL 디코딩을 손수 해 줘야 한다.
     }
     
     @RequestMapping("/list")
     public String list(
-                @RequestParam("name") String name,
-                Map<String, Object> map) throws Exception {
-        List<Member> members = teamMemberDao.selectListWithEmail(name);
+            @RequestParam("name") String teamName,
+            Map<String,Object> map) throws Exception {
+       
+        List<Member> members = teamMemberDao.selectListWithEmail(teamName);
         map.put("members", members);
         return "/team/member/list.jsp";
     }
 }
 
+//ver 50 - DAO 변경에 맞춰 메서드 호출 변경
+//ver 49 - 요청 핸들러의 파라미터 값 자동으로 주입받기
+//ver 48 - CRUD 기능을 한 클래스에 합치기
+//ver 47 - 애노테이션을 적용하여 요청 핸들러 다루기
+//ver 46 - 페이지 컨트롤러를 POJO를 변경
 //ver 45 - 프론트 컨트롤러 적용
 //ver 42 - JSP 적용
 //ver 40 - CharacterEncodingFilter 필터 적용.

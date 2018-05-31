@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- mybatis가 DAO 구현체를 자동 생성한다면,
+          그 구현체가 SQL을 제대로 찾을 수 있도록,
+     namespace의 값을 인터페이스의 QName과 같게 해야 한다. -->
+<mapper namespace="bitcamp.java106.step12.ex4.BoardDao">
+
+<!-- 컬럼명을 자바 객체의 프로퍼티명(셋터명)과 일치시키기:
+         컬럼의 이름이 프로퍼티 이름과 다르다면,
+         셋터를 호출할 수 없기 때문에  
+         컬럼 이름을 프로퍼티 이름과 일치시켜야 한다. 
+     select 문에서 컬럼의 별명을 프로퍼티명과 같게 하라! -->
+     
+     <resultMap type="Board" id="BoardMap">
+     <!-- 컬럼명과 자바 객체의 프로퍼티명을 연결한다.
+          column="테이블 컬럼명"
+          property="자바 객체의 프로퍼티명"
+	          시작태그와 끝태그 사이에 추가내용이 없다면 끝태그를 생략하고
+	          대신에 시작태그의 끝에 /를 붙인다.
+     -->
+     <!-- 주의! primary key 컬럼인 경우 id태그를 사용하라! -->
+        <id column="bno" property="no"/>
+        <result column="titl" property="title"/>
+        <result column="cont" property="content"/>
+        <result column="rdt" property="registeredDate"/>
+     </resultMap>
+     
+    <!-- 위에서 정의한 연결 정보를 사용하고 싶다면,
+         resultMap="연결정보아이디" 를 설정하라! -->     
+  <select id="selectList" resultMap="BoardMap" parameterType="map">
+    select 
+    bno, <!-- BoardMap의 연결정보를 참조하기 때문에 별명을 주지 않아도 된다. -->
+    titl,
+    cont,
+    rdt
+    from ex_board
+    order by bno desc
+    limit #{startIndex}, #{pageSize}
+  </select>
+  
+  <insert id="insert" parameterType="Board">
+    insert into ex_board(titl,cont,rdt) 
+    values(#{title},#{content},now())
+  </insert>  
+  
+   <delete id="delete" parameterType="int">
+    delete from ex_board
+    where bno=#{value} 
+  </delete>  
+  
+</mapper>
+
+
+
+
+
+
+

@@ -1,43 +1,54 @@
 package bitcamp.java106.pms.web;
 
-import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.dao.TeamMemberDao;
 import bitcamp.java106.pms.domain.Team;
 
-@Component("/team")
+@Controller
+@RequestMapping("/team")
 public class TeamController {
 
     TeamDao teamDao;
     TeamMemberDao teamMemberDao;
     TaskDao taskDao;
     
-    public TeamController(TeamDao teamDao, TeamMemberDao teamMemberDao, TaskDao taskDao) {
+    public TeamController(
+            TeamDao teamDao, 
+            TeamMemberDao teamMemberDao,
+            TaskDao taskDao) {
         this.teamDao = teamDao;
         this.teamMemberDao = teamMemberDao;
         this.taskDao = taskDao;
     }
-
+    
     @RequestMapping("/add")
     public String add(Team team) throws Exception {
+        
         teamDao.insert(team);
         return "redirect:list.do";
     }
-
+    
     @RequestMapping("/delete")
     public String delete(@RequestParam("name") String name) throws Exception {
-        teamMemberDao.delete(name);
+        
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("teamName", name);
+        
+        teamMemberDao.delete(params);
+        
         taskDao.deleteByTeam(name);
+        
         int count = teamDao.delete(name);
+        
         if (count == 0) {
             throw new Exception ("해당 팀이 없습니다.");
         }
@@ -45,7 +56,7 @@ public class TeamController {
     }
     
     @RequestMapping("/list")
-    public String list(Map<String, Object> map) throws Exception {
+    public String list(Map<String,Object> map) throws Exception {
         
         List<Team> list = teamDao.selectList();
         map.put("list", list);
@@ -54,27 +65,32 @@ public class TeamController {
     
     @RequestMapping("/update")
     public String update(Team team) throws Exception {
-            int count = teamDao.update(team);
-            if (count == 0) {
-                throw new Exception("<p>해당 팀이 존재하지 않습니다.</p>");
-            }
-            
-            return "redirect:list.do";
+        
+        int count = teamDao.update(team);
+        if (count == 0) {
+            throw new Exception("<p>해당 팀이 존재하지 않습니다.</p>");
+        }
+        return "redirect:list.do";
     }
     
     @RequestMapping("/view")
-    public String view(@RequestParam("name") String name, Map<String, Object> map) throws Exception {
+    public String view(
+            @RequestParam("name") String name,
+            Map<String,Object> map) throws Exception {
+        
         Team team = teamDao.selectOneWithMembers(name);
         if (team == null) {
             throw new Exception("유효하지 않은 팀입니다.");
         }
         map.put("team", team);
-           
         return "/team/view.jsp";
     }
-    
 }
 
+//ver 49 - 요청 핸들러의 파라미터 값 자동으로 주입받기
+//ver 48 - CRUD 기능을 한 클래스에 합치기
+//ver 47 - 애노테이션을 적용하여 요청 핸들러 다루기
+//ver 46 - 페이지 컨트롤러를 POJO를 변경
 //ver 45 - 프론트 컨트롤러 적용
 //ver 42 - JSP 적용
 //ver 40 - CharacterEncodingFilter 필터 적용.
