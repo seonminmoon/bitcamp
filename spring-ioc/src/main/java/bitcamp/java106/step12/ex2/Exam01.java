@@ -1,5 +1,5 @@
-// Spring과 Mybatis 연동
-package bitcamp.java106.step12.ex1;
+// Spring과 Mybatis 연동 : 설정이 아니라 객체를 통해 SqlSessionFactory 만들기
+package bitcamp.java106.step12.ex2;
 
 import java.util.List;
 
