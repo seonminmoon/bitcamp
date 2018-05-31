@@ -22,7 +22,7 @@ public class BoardController {
         // 겟터 셋터로 알아내니까 파라미터에 @RequestParam 안붙여도 상관 없다.
         boardDao.insert(board);
         return "redirect:list.do";
-    }
+    } 
     
     @RequestMapping("/delete")
     public String delete(@RequestParam("no") int no) throws Exception {
