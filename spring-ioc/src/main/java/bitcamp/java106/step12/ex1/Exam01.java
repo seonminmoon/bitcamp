@@ -23,7 +23,7 @@ public class Exam01 {
         board.setTitle("제목입니다.");  
         board.setContent("내용입니다.");
         boardDao.insert(board);
-        
+           
         // 2) 게시물 목록 조회
         List<Board> list = boardDao.selectList(1, 5);
         for (Board b : list) {
