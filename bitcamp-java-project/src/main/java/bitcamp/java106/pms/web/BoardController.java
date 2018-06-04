@@ -26,7 +26,7 @@ public class BoardController {
         boardDao.insert(board);
         return "redirect:list.do";
     }
-    
+      
     @RequestMapping("/delete")
     public String delete(@RequestParam("no") int no) throws Exception {
         
