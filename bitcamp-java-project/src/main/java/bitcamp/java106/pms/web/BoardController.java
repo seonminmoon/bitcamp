@@ -38,7 +38,7 @@ public class BoardController {
     }
     
     @RequestMapping("/list")
-    public String list(Map<String,Object> map) throws Exception {        
+    public String list(Map<String,Object> map) throws Exception {
             
         List<Board> list = boardDao.selectList();
         map.put("list", list);
