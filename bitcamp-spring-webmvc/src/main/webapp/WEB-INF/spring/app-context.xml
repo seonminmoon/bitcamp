@@ -14,7 +14,6 @@
         -->
         <context:exclude-filter type="regex" expression="bitcamp.mvc.web.*"/>
     </context:component-scan>
-    
 </beans>
 
 

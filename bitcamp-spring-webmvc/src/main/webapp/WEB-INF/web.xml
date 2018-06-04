@@ -23,6 +23,16 @@
         <url-pattern>/mvc/*</url-pattern>
     </servlet-mapping>
     
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+<!-- ContextLoaderListener의 IoC 컨트롤러를 위한 설정 파일을 지정 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring/app-context.xml</param-value>
+    </context-param>
+    
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.xhtml</welcome-file>
