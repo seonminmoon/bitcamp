@@ -1,4 +1,4 @@
-// @RequestMapping - HTTP 파라미터로 메서드 구분하기
+// @RequestMapping - HTTP 헤더로 메서드 구분하기
 package bitcamp.mvc.web;
 
 import org.springframework.stereotype.Controller;
