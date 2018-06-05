@@ -78,7 +78,7 @@ public class TaskController {
     }
     
     @RequestMapping("/form")
-    public String form(
+    public void form(
             @RequestParam("teamName") String teamName,
             Map<String,Object> map) throws Exception {
         
@@ -88,11 +88,10 @@ public class TaskController {
         }
         List<Member> members = teamMemberDao.selectListWithEmail(teamName);
         map.put("members", members);
-        return "/task/form.jsp";
     }
     
     @RequestMapping("/list")
-    public String list(
+    public void list(
             @RequestParam("teamName") String teamName,
             Map<String,Object> map) throws Exception {
         
@@ -102,7 +101,6 @@ public class TaskController {
         }
         List<Task> list = taskDao.selectList(team.getName());
         map.put("list", list);
-        return  "/task/list.jsp";
     }
     
     @RequestMapping("/update")
@@ -125,7 +123,7 @@ public class TaskController {
     }
     
     @RequestMapping("/view")
-    public String view(
+    public void view(
             @RequestParam("no") int no,
             Map<String,Object> map) throws Exception {
         
@@ -139,7 +137,6 @@ public class TaskController {
         
         map.put("task", task);
         map.put("members", members);
-        return "/task/view.jsp";
     }
 // GlobalBindingInitializer 에 등록했기 때문에 이 클래스에서는 제외한다.
     /*
