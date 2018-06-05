@@ -7,7 +7,7 @@
 <head>
 <meta charset='UTF-8'>
 <title>작업 보기</title>
-</head>
+</head> 
 <body>
 <jsp:include page="../header.jsp"/>
 <h1>작업 보기</h1>
