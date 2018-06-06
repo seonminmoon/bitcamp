@@ -36,7 +36,7 @@ public class BoardController {
         }
         return "redirect:list.do";
     }
-    
+      
     @RequestMapping("/list")
     public String list(Map<String,Object> map) throws Exception {        
             
