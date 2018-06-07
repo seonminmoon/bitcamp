@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,7 +30,7 @@ public class ClassroomController {
     public String add(Classroom classroom) throws Exception {
         
         classroomDao.insert(classroom);
-        return "redirect:list.do";
+        return "redirect:list";
     }
     
     @RequestMapping("/delete")
@@ -39,7 +40,7 @@ public class ClassroomController {
         if (count == 0) {
             throw new Exception("<p>해당 강의가 없습니다.</p>");
         }
-        return "redirect:list.do";
+        return "redirect:list";
     }
     
     @RequestMapping("/list")
@@ -56,12 +57,12 @@ public class ClassroomController {
         if (count == 0) {
             throw new Exception("해당 강의가 존재하지 않습니다.");
         }
-        return "redirect:list.do";
+        return "redirect:list";
     }
     
-    @RequestMapping("/view")
-    public void view(
-            @RequestParam("no") int no, 
+    @RequestMapping("{no}")
+    public String view(
+            @PathVariable int no, 
             Map<String,Object> map) throws Exception {
      
         Classroom classroom = classroomDao.selectOne(no);
@@ -70,6 +71,7 @@ public class ClassroomController {
             throw new Exception("유효하지 않은 강의입니다.");
         }
         map.put("classroom", classroom);
+        return "classroom/view";
     }
     // GlobalBindingInitializer 에 등록했기 때문에 이 클래스에서는 제외한다.
     /*
