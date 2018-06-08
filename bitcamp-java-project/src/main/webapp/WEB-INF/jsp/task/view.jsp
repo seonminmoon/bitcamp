@@ -7,12 +7,12 @@
 <head>
 <meta charset='UTF-8'>
 <title>작업 보기</title>
-</head> 
+</head>
 <body>
 <jsp:include page="../header.jsp"/>
 <h1>작업 보기</h1>
 <form action='update' method='post'>
-<input type='hidden' name='no' value='${no}'>
+<input type='hidden' name='no' value='${task.no}'>
 <table border='1'>
 <tr>
     <th>팀명</th>

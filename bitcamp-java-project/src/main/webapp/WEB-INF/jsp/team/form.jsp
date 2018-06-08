@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" 
+    contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -7,7 +8,7 @@
 <title>팀 등록</title>
 </head>
 <body>
-
+<jsp:include page="../header.jsp"/>
 <h1>팀 등록</h1>
 <form action="add" method="post">
 <table border='1'>
@@ -35,3 +36,5 @@
 
 </body>
 </html>
+
+    

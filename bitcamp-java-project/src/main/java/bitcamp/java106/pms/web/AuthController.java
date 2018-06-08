@@ -24,10 +24,9 @@ public class AuthController {
     public AuthController(MemberDao memberDao) {
         this.memberDao = memberDao;
     }
-
+    
     @RequestMapping("/form")
     public void form() {
-        
     }
             
     @RequestMapping("/login")
@@ -65,7 +64,7 @@ public class AuthController {
             String refererUrl = (String)session.getAttribute("refererUrl");
             
             if (refererUrl == null || 
-                refererUrl.contains("login") ||
+                refererUrl.contains("login.do") ||
                 refererUrl.endsWith("/auth/form.jsp")) { 
                 // 이전 페이지가 없다면 메인 화면으로 이동시킨다.
                 return "redirect:/"; // => "/java106-java-project"

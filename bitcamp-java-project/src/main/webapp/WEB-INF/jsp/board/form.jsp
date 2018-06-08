@@ -10,6 +10,7 @@
 <body>
 
 <jsp:include page="../header.jsp"/>
+
 <h1>게시물 등록</h1>
 <form action="add" method="post">
 제목: <input type="text" name="title"><br>
@@ -19,3 +20,4 @@
 
 </body>
 </html>
+    
