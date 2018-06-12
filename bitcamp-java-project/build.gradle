@@ -51,6 +51,9 @@ dependencies {
     // compile group: 'org.springframework', name: 'spring-context', version: '5.0.6.RELEASE'
     compile group: 'org.springframework', name: 'spring-jdbc', version: '5.0.6.RELEASE'
     
+    // AOP 관련 라이브러리
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.1'
+    
     // DB 커넥션풀 라이브러리
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
     
@@ -66,4 +69,5 @@ dependencies {
     // => 즉 서버와 같은 버전의 라이브러리를 다운로드 받아서 사용해야만 그 서버에서 실행할 수 있다.
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     // 서버에 배치하면 안되니까 providedCompile 로 한다
+    
 }
