@@ -16,7 +16,7 @@ public class Exam01 {
         
         if (System.getProperty("user.language") != null)
             userLanguage = System.getProperty("user.language");
-        
+     
         label = new Properties();
         label.load(new FileReader(
                 String.format("%s-%s%s.properties",
