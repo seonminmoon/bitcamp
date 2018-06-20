@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ex02</title>
+</head>
+<body>
+<h1>반복문 - for(... in ...)</h1>
+<script>
+"use strict"
+// 배열의 모든 값을 차례대로 꺼낼 때 융ㅇ하다
+
+var obj = {
+	name: "홍길동",
+	age: 20,
+	tel: 1111-1111,
+	working = true
+};
+
+var propName;
+for (i in obj) { // 객체에 저장된 값의 이름이다. 즉 프로퍼티 명이다.
+	console.log(i, obj[i]);
+}
+console.log("-----------------------------");
+
+for(var x in arr) {
+	console.log(arr[x]);
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
