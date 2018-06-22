@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ex07</title>
+</head>
+<body>
+<h1>AJAX - AJAX의 제약 해소</h1>
+<button id="btn1">요청</button><br>
+<textarea id="ta" rows="10" cols="80"></textarea>
+<script>
+"use strict"
+
+// AJAX 요청에 대해 응답을 하는 서버 쪽에서 다음과 같은 응답 헤더를 포함한다면
+// 웹브라우저는 응답결과를 리턴해 줄 것이다.
+//    Access-Control-Allow-Origin: 허락할 도메인
+
+// 버튼을 클릭할 때 서버에 HTTP 요청하여 응답 결과를 textarea 태그에 출력한다.
+var ta = document.querySelector("#ta");
+
+document.querySelector("#btn1").onclick = () => {
+   var xhr = new XMLHttpRequest;
+   xhr.open("GET", "http://192.168.0.83:8888/bitcamp-javascript/jsp/test1.jsp", false)
+   xhr.send();
+   ta.value = xhr.responseText;
+   
+   // 이 HTML 문서는 www.zdnet.co.kr 에서 다운로드 받은 것이 아니기 때문에
+   // 웹브라우저는 응답받은 결과를 리턴하지 않는다.
+   // => 실행하면 다음과 같은 오류가 뜬다.
+   // No 'Access-Control-Allow-Origin' header is present on the requested resource.
+};
+</script>
+</body>
+</html>
