@@ -33,4 +33,14 @@ public class Exam10_2 {
         // 그리고 그 JSON 문자열을 출력한다.
         return json;
     }
+    
+    @GetMapping(value="list2")
+    @ResponseBody
+    public Object list2() {
+        List<Board> boards = boardDao.selectList();
+        // 요청 핸들러의 리턴값이 @ResponseBody인 경우,
+        // 일반 객체를 리턴하면 스프링에서 자동으로 JSON으로 바꿔 응답한다.
+        return boards;
+    }
+    
 }
