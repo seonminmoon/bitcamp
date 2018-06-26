@@ -9,5 +9,7 @@
 **/build
 **/temp/
 **/.vscode
+**/node_modules
+**/package-lock.json
 
-!build.gradle 
+!build.gradle
