@@ -19,18 +19,18 @@ import bitcamp.java106.pms.service.MemberService;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    
+
     MemberService memberService;
-     
+
     public AuthController(MemberService memberService) {
         this.memberService = memberService;
     }
-    
+
     @GetMapping("/loginUser")
     public Member loginUser(HttpSession session) {
         return (Member) session.getAttribute("loginUser");
     }
-    
+
     @RequestMapping("/login")
     public Object login(
             @RequestParam("id") String id,
@@ -39,7 +39,8 @@ public class AuthController {
             HttpServletRequest request,
             HttpServletResponse response,
             HttpSession session) throws Exception {
-        
+
+
         Cookie cookie = null;
         if (saveId != null) {
             // 입력폼에서 로그인할 때 사용한 ID를 자동으로 출력할 수 있도록 
@@ -52,9 +53,9 @@ public class AuthController {
             // 즉 유효기간을 0으로 설정함으로써 "id"라는 이름의 쿠키를 무효화시키는 것이다.
         }
         response.addCookie(cookie);
-        
-        HashMap<String,Object> result = new HashMap<>();
-        
+
+        HashMap<String, Object> result = new HashMap<>();
+
         if (memberService.isExist(id, password)) { // 로그인 성공!
             session.setAttribute("loginUser", memberService.get(id));
             result.put("state", "success");
@@ -64,18 +65,26 @@ public class AuthController {
         }
         return result;
     }
-    
+
     @RequestMapping("/logout")
-    public String logout(
-            HttpServletRequest request,
-            HttpSession session) throws Exception {
-        
+    public void logout(HttpSession session) throws Exception {  
         // 세션을 꺼내 무효화시킨다.
         session.invalidate();
-        
-        // 웹 애플리케이션의 시작 페이지로 가라고 웹브라우저에게 얘기한다.
-        return "redirect:/"; // ==> "/java106-java-project"
     }
+
 }
 
-//ver 55 - JSON 데이터를 출력하는 페이지 컨트롤러 생성
+//               [웹브라우저]                                  [웹서버] 
+// GET 요청: /java106-java-project/auth/login ===>
+//                                                       <=== 응답: 로그인폼 
+// POST 요청: /java106-java-project/auth/login ===>
+//                                                       <=== 응답: redirect URL
+// GET 요청: /java106-java-project ===> 
+//                                                       <=== 응답: index.html
+// 메인화면 출력!
+
+//ver 42 - JSP 적용
+//ver 41 - 클래스 추가
+
+
+
