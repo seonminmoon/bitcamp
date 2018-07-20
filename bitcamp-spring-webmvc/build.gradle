@@ -21,6 +21,9 @@ eclipse {
 
 // 다운로드 서버에서 받을 라이브러리를 지정한다.
 dependencies {
+    // 썸네일 이미지 생성 라이브러리
+    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+
     // Spring IoC 컨테이너 라이브러리
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.6.RELEASE'
     // 서블릿
