@@ -91,7 +91,7 @@ public class Exam11_2 {
         returnData.put("files", jsonDataList);
         
         for (int i = 0; i < files.length; i++) {
-            HashMap<String, Object> jsonData = new HashMap<>();
+            HashMap<String,Object> jsonData = new HashMap<>();
             String filename = UUID.randomUUID().toString();
             jsonData.put("filename", filename);
             jsonData.put("filesize", files[i].getSize());
@@ -99,6 +99,7 @@ public class Exam11_2 {
             try {
                 File path = new File(filesDir + "/" + filename);
                 System.out.println(path);
+                files[i].transferTo(path);
                 jsonDataList.add(jsonData);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -106,6 +107,7 @@ public class Exam11_2 {
         }
         return returnData;
     }
+    
     
     
 
