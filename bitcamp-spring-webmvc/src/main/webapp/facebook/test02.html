@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>페이스북 로그인</h1>
+<script id="facebook-jssdk" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script id="s1" type="text/javascript"></script>
+<script id="s2" type="text/javascript"></script>
+<script id="s3" type="text/javascript"></script>
+<script id="s4" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+// 페이스북 SDK 라이브러리파일 로드
+// - 동적으로 script 태그를 만든다.
+// - 웹브라우저는 당연히 동적으로 생성된 script 태그를 실행할 것이다.
+/*
+function f1(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "https://connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}
+f1(document, 'script', 'facebook-jssdk');
+
+ 원래는 이렇게 함수를 만들어놓은 뒤에 그 함수를 호출하는 방법을 사용하는데, 한 번만 쓰이는 코드는 따로 변수를 지정하지 않는다.
+*/
+
+(function(d, s, id) { // 함수를 정의한 후 바로 호출하는 방법!
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "https://connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs); // 만든 태그를 부모태그의 바로 전의 위치로 이동시킨다.
+}(document, 'script', 'facebook-jssdk'));
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
