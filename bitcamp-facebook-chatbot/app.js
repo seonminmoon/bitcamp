@@ -194,6 +194,12 @@ function handlePostback(sender_psid, received_postback) {
     response = { "text": "Thanks!" }
   } else if (payload === 'no') {
     response = { "text": "Oops, try sending another image." }
+  } else if (payload === 'menu01') {
+    response = { "text": "오~~ 치맥 코스를 선택하셨군요! 탁월한 선택이에요!" }
+  } else if (payload === 'menu02') {
+    response = { "text": "오~~ 야경은 규현이랑 봐야 제맛이죠!" }
+  } else if (payload === 'menu03') {
+    response = { "text": "오오~~ 카페를 가고싶으세요? 커피 한 잔 고?" }
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
